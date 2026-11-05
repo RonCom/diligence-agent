@@ -1,0 +1,50 @@
+{
+ "L01": {
+  "system": "agent",
+  "answer_sha": "62718ff2f31f"
+ },
+ "L02": {
+  "system": "agent",
+  "answer_sha": "757ccaccddf9"
+ },
+ "L03": {
+  "system": "agent",
+  "answer_sha": "b06f27c0accf"
+ },
+ "L04": {
+  "system": "agent",
+  "answer_sha": "6ccca4585919"
+ },
+ "L05": {
+  "system": "baseline",
+  "answer_sha": "cf5ebce181e0"
+ },
+ "L06": {
+  "system": "baseline",
+  "answer_sha": "13af871fb6b8"
+ },
+ "L07": {
+  "system": "baseline",
+  "answer_sha": "64c624732c5f"
+ },
+ "L08": {
+  "system": "baseline",
+  "answer_sha": "f98fda5c8feb"
+ },
+ "L09": {
+  "system": "langchain",
+  "answer_sha": "8f1dc53f222f"
+ },
+ "L10": {
+  "system": "langchain",
+  "answer_sha": "1e2fe54f3b80"
+ },
+ "L11": {
+  "system": "langchain",
+  "answer_sha": "c822d1171c0c"
+ },
+ "L12": {
+  "system": "langchain",
+  "answer_sha": "f88bb1da7a8e"
+ }
+}

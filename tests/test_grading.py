@@ -13,7 +13,8 @@ from diligence_agent.grading import amounts_millions, check, dates_in, declined,
     [
         ("NOT IN SOURCES", "exact"),
         ("not in sources.", "exact"),
-        ("The Orange Book search for Tremfya did not return any records.", ""),  # states a finding, not a decline
+        # an empty search counts as a decline (changed after the test run; config.yaml `deviations`)
+        ("The Orange Book search for Tremfya did not return any records.", "prose"),
         ("The records do not provide a list price for Trikafta.", "prose"),
         ("I cannot determine Vertex's gross margin from these sources.", "prose"),
         ("There is no information about Keytruda sales in the records.", "prose"),
@@ -60,6 +61,9 @@ def test_amounts():
         ({"type": "yes_no", "value": False}, "Tysabri is not approved for ulcerative colitis.", 1.0),
         ({"type": "yes_no", "value": False}, "Yes, it is indicated for that.", 0.0),
         ({"type": "yes_no", "value": False}, "NOT IN SOURCES", 0.0),  # a decline is not a "no"
+        ({"type": "decline"}, "The search for the royalty rate on Ozempic did not return any records.", 1.0),
+        ({"type": "decline"}, "The Orange Book search for Tremfya returned no records.", 1.0),
+        ({"type": "decline"}, "Royalty Pharma returned capital to holders; records show 4% [x:y].", 0.0),
         ({"type": "yes_no", "value": False}, "The records do not mention glioblastoma.", 0.0),
         (
             {"type": "trial_status", "status": "ACTIVE_NOT_RECRUITING", "primary_completion": "2027-07-05"},

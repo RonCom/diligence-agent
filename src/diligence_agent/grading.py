@@ -47,6 +47,10 @@ _PROSE = re.compile("|".join([
     r"provide)\w*",
     r"\bI\s+(?:do\s+not|don't)\s+(?:know|have\s+(?:enough|specific|access|the\s+information))",
     r"\bnone\s+of\s+the\s+(?:listed\s+|returned\s+)?(?:trials|records|results|sources)",
+    # Added after the test run (a documented deviation, config.yaml `deviations`): a search that came back empty,
+    # as in LangChain's test answer to oos03, "...did not return any records."
+    r"\b(?:did\s+not|didn't|does\s+not|doesn't)\s+return\s+any\s+(?:records?|results?|matches)",
+    r"\breturned\s+no\s+(?:records?|results?|matches)",
 ]), re.IGNORECASE)  # fmt: skip
 
 

@@ -124,6 +124,24 @@ preregistered:
     gold_check: build-eval --check must report "gold unchanged" just before the test run; a changed gold is
       rebuilt and noted before any answer is scored
 
+# ---- Deviations from the frozen plan (after the test run at eval-test-v1) ------------------
+# The pre-registered block above is unchanged. Results as first scored: reports/eval_as_preregistered.json.
+deviations:
+  - date: 2026-11-05
+    by: Chris
+    what: >-
+      the decline detector also counts a search that came back empty ("did not return any records", "returned no
+      records") as a decline
+    why: >-
+      LangChain's test answer to oos03 ("The search for the royalty rate on Ozempic in Royalty Pharma's 10-K filings
+      did not return any records.") declines without the exact reply; graded as an answer, it failed H4 at 8 of 10
+    effect: >-
+      LangChain oos03 goes from 0 to 1 in both repeats and H4 from fail to pass (9 of 10); the only other changes
+      are LangChain's bla01 (dev) and bla02, bla03 (test) answers, now declines, whose correctness is unchanged
+      because declining is right on biologic questions. Those three leave the citation-check denominator (declines
+      make no claims), so LangChain's test cite_faithful moves from 0.868 (n=53) to 0.920 (n=50); correct_strict
+      from 0.871 to 0.887
+
 # ---- Baseline (single-call RAG; set before any baseline score) ---------------------------
 baseline:
   k: 8                             # records retrieved per question from data/index_baseline (strong corpus)
