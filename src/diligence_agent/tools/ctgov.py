@@ -6,7 +6,7 @@ import re
 from datetime import date
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from diligence_agent.evidence import Evidence
 from diligence_agent.tools.base import Tool, ToolContext
@@ -29,7 +29,8 @@ Status = Literal[
 
 
 class CtgovArgs(BaseModel):
-    intervention: str = Field(min_length=2, description="Drug name, brand or generic")
+    intervention: str | None = Field(None, min_length=2, description="Drug name; trial records use generic names")
+    nct_ids: list[str] | None = Field(None, description="Look up specific studies, e.g. [NCT04455750]")
     condition: str | None = Field(None, description="Disease or condition, optional")
     phase: Phase | None = Field(None, description="Trial phase, e.g. PHASE3")
     status: list[Status] | None = Field(None, description="Overall statuses to keep, e.g. [RECRUITING]")
@@ -46,6 +47,21 @@ class CtgovArgs(BaseModel):
             s = s if s.startswith(("PHASE", "EARLYPHASE")) else f"PHASE{s}"
             return s.replace("EARLYPHASE", "EARLY_PHASE")
         return v
+
+    @field_validator("nct_ids", mode="before")
+    @classmethod
+    def _ids(cls, v):
+        if isinstance(v, str):
+            v = re.split(r"[,\s]+", v)
+        if isinstance(v, list):
+            return [s.strip().upper() for s in v if str(s).strip()]
+        return v
+
+    @model_validator(mode="after")
+    def _something_to_search(self):
+        if not (self.intervention or self.condition or self.nct_ids):
+            raise ValueError("give intervention, condition or nct_ids")
+        return self
 
     @field_validator("status", mode="before")
     @classmethod
@@ -93,12 +109,17 @@ class CtgovTool(Tool):
     description = (
         "Search ClinicalTrials.gov for studies of a drug. Returns each study's NCT id, title, phase, overall status, "
         "primary completion date (actual or estimated) and lead sponsor. Filter by phase, status and a primary "
-        "completion date range to find upcoming readouts."
+        "completion date range to find upcoming readouts, or look up studies by NCT id."
     )
     Args = CtgovArgs
+    version = 2  # 2: nct_ids lookup; intervention optional
 
     def run(self, args: CtgovArgs, ctx: ToolContext) -> list[Evidence]:
-        params = {"query.intr": args.intervention, "pageSize": args.max_results, "fields": FIELDS}
+        params = {"pageSize": args.max_results, "fields": FIELDS}
+        if args.intervention:
+            params["query.intr"] = args.intervention
+        if args.nct_ids:
+            params["filter.ids"] = ",".join(args.nct_ids)
         if args.condition:
             params["query.cond"] = args.condition
         if args.status:

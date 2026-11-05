@@ -2,9 +2,17 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import mlflow
 import pytest
 
 from diligence_agent.tools import build_runner
+
+
+@pytest.fixture(autouse=True, scope="session")
+def no_tracing():
+    """Tests write no traces; test_tracing.py turns tracing on against a temporary store."""
+    mlflow.tracing.disable()
+    yield
 
 
 @pytest.fixture

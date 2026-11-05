@@ -144,7 +144,7 @@ def test_pubmed_no_hits(runner):
 
 def test_validation_error_message_for_repair(runner):
     out = runner.call("ctgov_search", {"phase": "PHASE3"})
-    assert not out.ok and out.error.startswith("invalid arguments: intervention")
+    assert not out.ok and "give intervention, condition or nct_ids" in out.error
     assert runner.call("ctgov_search", "{not json").error.startswith("arguments are not valid JSON")
     assert "available:" in runner.call("nope", {}).error
 
@@ -158,6 +158,7 @@ def test_schemas_have_no_titles(runner):
         "drugs_at_fda",
         "edgar_filings",
         "pubmed_search",
+        "doc_search",
     }
     assert "title" not in str(schemas[0]["function"]["parameters"])
 

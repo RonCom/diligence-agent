@@ -58,7 +58,10 @@ class LabelTool(Tool):
 
     def run(self, args: LabelArgs, ctx: ToolContext) -> list[Evidence]:
         q = _quoted(args.drug)
-        results = _search(ctx, LABEL_API, [f"openfda.brand_name:{q}", f"openfda.generic_name:{q}"], limit=5)
+        # openFDA leaves the harmonized openfda fields empty on some labels (Tysabri, Tremfya, Evrysdi in 2026);
+        # spl_product_data_elements, the label's own product listing, still names the product
+        queries = [f"openfda.brand_name:{q}", f"openfda.generic_name:{q}", f"spl_product_data_elements:{q}"]
+        results = _search(ctx, LABEL_API, queries, limit=5)
         newest: dict[str, dict] = {}
         for r in results:  # one label per set id, newest version
             sid = r.get("set_id", "")

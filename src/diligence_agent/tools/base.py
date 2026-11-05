@@ -35,7 +35,10 @@ class ToolContext:
     data_dir: Path
     fake: bool = False
     env: dict[str, str] = field(default_factory=dict)
-    memo: dict[str, Any] = field(default_factory=dict)  # per-process data such as the parsed Orange Book
+    memo: dict[str, Any] = field(default_factory=dict)
+    settings: dict[str, Any] = field(
+        default_factory=dict
+    )  # config.yaml  # per-process data such as the parsed Orange Book
 
 
 class Tool:
@@ -43,6 +46,7 @@ class Tool:
     description: ClassVar[str]
     Args: ClassVar[type[BaseModel]]
     version: ClassVar[int] = 1  # bump when the records a tool returns change shape or content
+    cacheable: ClassVar[bool] = True  # False for local tools whose data changes when rebuilt
 
     def run(self, args: BaseModel, ctx: ToolContext) -> list[Evidence]:
         raise NotImplementedError
@@ -127,7 +131,8 @@ class ToolRunner:
 
         dumped = args.model_dump(mode="json")
         key = cache_key(name, dumped, tool.version)
-        if self.cache is not None and (hit := self.cache.get(key)) is not None:
+        cache = self.cache if tool.cacheable else None
+        if cache is not None and (hit := cache.get(key)) is not None:
             evidence = [Evidence.model_validate(r) for r in hit]
             return done(args=normalize(dumped), ok=True, evidence=evidence, cache_hit=True, key=key)
 
@@ -139,6 +144,6 @@ class ToolRunner:
         except (HttpError, ToolConfigError) as exc:
             return done(args=normalize(dumped), ok=False, error=str(exc), key=key)
 
-        if self.cache is not None:
-            self.cache.put(key, [e.model_dump(mode="json") for e in evidence])
+        if cache is not None:
+            cache.put(key, [e.model_dump(mode="json") for e in evidence])
         return done(args=normalize(dumped), ok=True, evidence=evidence, key=key)

@@ -1,0 +1,51 @@
+# Royalty Pharma's marketed royalty products, from its latest 10-K.
+# Status: confirmed by Chris on 2026-11-04 (all 32 products).
+#
+# Source: Royalty Pharma plc 10-K for fiscal 2025, filed 2026-02-11, accession 0001802768-26-000003
+#   https://www.sec.gov/Archives/edgar/data/1802768/000180276826000003/rprx-20251231.htm
+#   - overview:     Item 1, "Portfolio Overview" table (products with 2025 receipts and end-market sales);
+#                   "Portfolio Summary" table gives royalty rates and estimated durations for the same products
+#   - cf_franchise: Portfolio Overview footnote (2): products in the cystic fibrosis franchise
+#   - other:        Portfolio Overview footnote (4): "Other products primarily include royalties on..."
+#   - recent:       "Other Recent Royalty Acquisitions and Key Developments on Recently Approved Products"
+# Applications: Drugs@FDA through openFDA (drugs_at_fda tool), checked 2026-11-04.
+# Left out: the Legacy SLP Interest (an equity interest, not a product) and the 20 development-stage candidates.
+status: confirmed
+products:
+  # ---- overview: royalty rate, duration, 2025 receipts and sales disclosed in the 10-K ----
+  - {name: Trelegy Ellipta, group: overview, marketer: GSK, area: Respiratory, applications: [NDA209482]}
+  - {name: Tysabri, group: overview, marketer: Biogen, area: Neuroscience, applications: [BLA125104]}
+  - {name: Evrysdi, group: overview, marketer: Roche, area: Rare disease, applications: [NDA213535, NDA219285]}
+  - {name: Xtandi, group: overview, marketer: "Pfizer, Astellas", area: Oncology, applications: [NDA203415, NDA213674]}
+  - {name: Tremfya, group: overview, marketer: Johnson & Johnson, area: Immunology, applications: [BLA761061]}
+  - {name: Imbruvica, group: overview, marketer: "AbbVie, Johnson & Johnson", area: Oncology,
+     applications: [NDA205552, NDA210563, NDA217003]}
+  - {name: Promacta, group: overview, marketer: Novartis, area: Hematology, applications: [NDA022291, NDA207027]}
+  - {name: Voranigo, group: overview, marketer: Servier, area: Oncology, applications: [NDA218784]}
+  - {name: Cabometyx, group: overview, marketer: "Exelixis, Ipsen, Takeda", area: Oncology, applications: [NDA208692]}
+  - {name: Cometriq, group: overview, marketer: "Exelixis, Ipsen, Takeda", area: Oncology, applications: [NDA203756]}
+  - {name: Spinraza, group: overview, marketer: Biogen, area: Rare disease, applications: [NDA209531]}
+  - {name: Trodelvy, group: overview, marketer: Gilead, area: Oncology, applications: [BLA761115]}
+  - {name: Erleada, group: overview, marketer: Johnson & Johnson, area: Oncology, applications: [NDA210951]}
+  - {name: Imdelltra, group: overview, marketer: Amgen, area: Oncology, applications: [BLA761344]}
+  # ---- cystic fibrosis franchise (Vertex): one row in the overview table ----
+  - {name: Trikafta, group: cf_franchise, marketer: Vertex, area: Rare disease, applications: [NDA212273, NDA217660]}
+  - {name: Alyftrek, group: cf_franchise, marketer: Vertex, area: Rare disease, applications: [NDA218730]}
+  - {name: Kalydeco, group: cf_franchise, marketer: Vertex, area: Rare disease, applications: [NDA203188, NDA207925]}
+  - {name: Orkambi, group: cf_franchise, marketer: Vertex, area: Rare disease, applications: [NDA206038, NDA211358]}
+  - {name: Symdeko, group: cf_franchise, marketer: Vertex, area: Rare disease, applications: [NDA210491]}
+  # ---- other products: named in a footnote, no product-level terms in the 10-K ----
+  - {name: Crysvita, group: other, applications: [BLA761068]}
+  - {name: Emgality, group: other, applications: [BLA761063]}
+  - {name: Entyvio, group: other, applications: [BLA125476, BLA761133]}
+  - {name: Farxiga, group: other, applications: [NDA202293]}
+  - {name: Onglyza, group: other, applications: [NDA022350]}
+  - {name: Idhifa, group: other, applications: [NDA209606]}
+  - {name: Nesina, group: other, applications: [NDA022271]}
+  - {name: Nurtec ODT, group: other, applications: [NDA212728]}
+  - {name: Orladeyo, group: other, applications: [NDA214094, NDA219776]}
+  - {name: Prevymis, group: other, applications: [NDA209939, NDA209940, NDA219104]}
+  - {name: Soliqua 100/33, group: other, applications: [BLA208673]}  # insulin combination; a BLA since the 2020 transition
+  # ---- recent: acquired or approved after the overview table's period ----
+  - {name: Amvuttra, group: recent, marketer: Alnylam, applications: [NDA215515]}  # royalty acquired November 2025
+  - {name: Myqorzo, group: recent, marketer: Cytokinetics, applications: [NDA219083]}  # aficamten, approved December 2025

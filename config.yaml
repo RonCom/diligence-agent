@@ -30,3 +30,95 @@ http:
     clinicaltrials.gov: 3
     www.fda.gov: 1
 tool_timeout_s: 60                 # wall clock per tool call, including retries
+
+# ---- Document search (doc_search tool; build with `diligence-agent index`) ---------------
+docsearch:
+  products: eval/drug_set.yaml     # confirmed drug set; one FDA label each
+  filings:                         # latest filing of each, split by Item and subsection
+    - {company: RPRX, form: 10-K}
+  embed_model: nomic-embed-text
+  chunk_words: 300                 # policy-rag's setting; its sweep kept 300/40
+  overlap_words: 40
+  retriever: hybrid                # bm25 | dense | hybrid | rerank; rerank gets a pre-registered test on dev
+  rerank_model: cross-encoder/ms-marco-MiniLM-L-6-v2
+  rerank_candidates: 20
+
+# ---- Evaluation -------------------------------------------------------------------------
+eval:
+  questions: eval/questions.jsonl  # built by `diligence-agent build-eval`; 93 questions, 31 dev / 62 test
+  human_labels: eval/human_labels.csv
+  bootstrap: {resamples: 10000, seed: 0, ci: 0.95}   # paired by question, percentile interval
+
+# ---- Pre-registered tests ---------------------------------------------------------------
+# Written before any scored run. Nothing here changes after the first test-set score is seen. The test split is
+# scored once, from a frozen git tag; everything is tuned on dev. Edits after approval need a new version and a
+# note in the README saying what changed and why.
+preregistered:
+  status: approved                 # draft -> approved (by Chris) -> frozen (tagged); scoring test needs frozen
+  version: 1
+  drafted: 2026-11-04
+  approved: 2026-11-04             # by Chris, as drafted (version 1)
+  decided: >-
+    2026-11-04, by Chris: strong baseline corpus; H4 at 9 of 10 on test; Chris's labels replace the judge on
+    judge-graded questions if kappa < 0.6; the test run is repeated twice
+  test_tag: eval-test-v1           # the git tag the single test run is scored from
+
+  systems:                         # all on gemma4:e4b, temperature 0, the same tools and budgets
+    agent: custom multi-agent loop (planner, researcher, verifier, writer)
+    langchain: LangChain create_agent with the same tools (lc_agent.py)
+    baseline: single-call RAG, one retrieval and one model call, no tools
+  baseline_corpus: strong          # strong: index also holds flattened Orange Book, Drugs@FDA and ClinicalTrials.gov
+                                   # records for the 32 products; weak: 10-K and labels only
+
+  primary_metric: correct_strict   # mean over all test questions; out-of-scope scores 1 for a decline, 0 otherwise
+
+  tests:
+    - id: H1
+      claim: the agent beats the baseline
+      metric: correct_strict
+      compare: [agent, baseline]
+      pass_if: paired bootstrap 95% CI of (agent - baseline) is above 0
+      and: agent false declines on answerable test questions <= baseline false declines
+    - id: H2
+      claim: the LangChain agent beats the baseline
+      metric: correct_strict
+      compare: [langchain, baseline]
+      pass_if: paired bootstrap 95% CI of (langchain - baseline) is above 0
+      and: langchain false declines on answerable test questions <= baseline false declines
+    - id: H3
+      claim: the custom agent and the LangChain agent differ
+      metric: correct_strict
+      compare: [agent, langchain]
+      pass_if: the 95% CI excludes 0; otherwise report "no difference shown", whichever is higher
+    - id: H4
+      claim: the agent declines out-of-scope questions
+      metric: out_of_scope declines on test
+      pass_if: at least 9 of 10       # brief's 14 of 15, scaled to the 10 out-of-scope questions in test
+      applies_to: [agent, langchain]
+
+  judge:                           # the judge grades 8 questions (10-K rate wording, footnotes) and every answer's
+    model: gemma4:26b              # faithfulness; code checks grade the rest
+    labels: 40                     # Chris labels 40 dev answers: all judge-graded ones, the rest sampled by category
+    kappa_min: 0.6                 # Cohen's kappa, judge vs Chris, correctness and faithfulness separately
+    if_below: >-
+      the judge's correctness grades are replaced by Chris's labels on the 8 judge-graded questions,
+      and faithfulness is reported from the verifier's citation checks only
+    also_report: judge vs code-check agreement on the code-graded questions
+
+  dev_only_decisions:              # each switch needs its CI above 0 on dev; otherwise the default stays
+    - doc_search retriever: rerank vs hybrid on dev correctness, no more false declines
+    - agent prompts, budgets and verifier settings, tracked by prompt hash
+
+  reported_not_tested:             # every metric with its 95% interval where it has one
+    - correct_strict overall, by category and by wording (direct, plain)
+    - judge raw beside strict
+    - citation-supported claim rate (verifier)
+    - false-decline rate on answerable questions; out-of-scope decline rate
+    - tool-call validity, steps per request, loop stops, budget stops
+    - p50 and p95 latency per request and per step; tokens and dollars per request
+
+  runs:
+    test_repeats: 2                # test is run twice; repeat 1 is primary, repeat 2 measures run-to-run change
+                                   # (policy-rag saw 35 of 62 answers change between reruns at temperature 0)
+    gold_check: build-eval --check must report "gold unchanged" just before the test run; a changed gold is
+      rebuilt and noted before any answer is scored
