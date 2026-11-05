@@ -176,6 +176,23 @@ both rows, and passed.
 
 ![Correct (strict) by question category, test split](reports/figures/accuracy_by_category.png)
 
+| Category | Questions | Custom agent | LangChain agent | Single-call RAG |
+|---|---|---|---|---|
+| Patent expiry | 8 | 87.5% [62.5, 100.0] | 100.0% | 43.8% [12.5, 75.0] |
+| Exclusivity expiry | 4 | 87.5% [62.5, 100.0] | 87.5% [62.5, 100.0] | 87.5% [62.5, 100.0] |
+| First approval date | 7 | 100.0% | 100.0% | 57.1% [14.3, 85.7] |
+| Approved for X? | 7 | 42.9% [14.3, 85.7] | 57.1% [14.3, 85.7] | 42.9% [14.3, 85.7] |
+| Trial status | 4 | 100.0% | 100.0% | 0.0% |
+| Phase 3 readouts, 12 months | 4 | 25.0% [0.0, 50.0] | 62.5% [25.0, 100.0] | 12.5% [0.0, 37.5] |
+| 10-K royalty terms, sales | 15 | 86.7% [66.7, 100.0] | 93.3% [80.0, 100.0] | 86.7% [66.7, 100.0] |
+| 10-K vs Orange Book | 1 | 100.0% | 100.0% | 0.0% |
+| Biologics (no patents) | 2 | 100.0% | 100.0% | 50.0% [0.0, 100.0] |
+| Out of scope | 10 | 100.0% | 90.0% [70.0, 100.0] | 100.0% |
+
+Intervals are 95% bootstrap CIs from `reports/eval.json`. A score of 0% or 100% has no interval: every resample of
+identical grades returns the same mean, so the bootstrap can't measure uncertainty there, and with 1 to 15
+questions per category, a perfect score is weak evidence.
+
 *What it shows:* single-call RAG loses most of its points on records that carry the answer in a field: trial status
 (0 of 4, all declined), patent expiry (44%), first approval date (57%) and the 10-K vs Orange Book comparison. Its
 index holds the gold record for every question, but on dev, hybrid rank fusion buried exact NCT ids that BM25
