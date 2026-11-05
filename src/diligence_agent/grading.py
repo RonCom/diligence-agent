@@ -32,11 +32,12 @@ DECLINE = "NOT IN SOURCES"
 # A decline written as prose instead of the exact reply, matched in the first sentence only, so an answer that notes
 # a missing detail after answering still counts as an answer. Adapted from policy-rag's answer.declined.
 _SRC = (
-    r"(?:the\s+)?(?:provided\s+|given\s+|available\s+|returned\s+|retrieved\s+)?"
-    r"(?:records?|sources?|tool\s+results?|search\s+results?|results?|data|documents?|information|tools?)"
+    r"(?:the\s+)?(?:provided\s+|given\s+|available\s+|returned\s+|retrieved\s+)?(?:sec\s+|fda\s+)?"
+    r"(?:records?|sources?|tool\s+results?|search\s+results?|results?|data|documents?|information|tools?|"
+    r"filings?|labels?)"
 )
 _PROSE = re.compile("|".join([
-    rf"\b{_SRC}\s+(?:do|does|did)\s+not\s+(?:provide|contain|include|address|specify|mention|state|cover|say|"
+    rf"\b{_SRC}(?:\s+[\w.&'-]+){{0,6}}?\s+(?:do|does|did)\s+not\s+(?:provide|contain|include|address|specify|mention|state|cover|say|"
     rf"answer|show|list|report)",
     rf"\bnot\s+(?:addressed|covered|specified|mentioned|found|stated|included|provided|contained|available|"
     rf"listed|reported)\s+in\s+{_SRC}",
@@ -51,7 +52,7 @@ _PROSE = re.compile("|".join([
 
 def declined(answer: str) -> str:
     """'exact' for the decline reply, 'prose' for a decline written out in the first sentence, '' otherwise."""
-    text = str(answer).strip()
+    text = unescape(answer).strip()
     if text.upper().startswith(DECLINE):
         return "exact"
     first = re.split(r"(?<=[.!?])\s+|\n", text, maxsplit=1)[0]
@@ -97,25 +98,30 @@ def months_in(text: str) -> set[str]:
     return out
 
 
-_MONEY = re.compile(r"\$?\s*(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*(billion|bn|million|mn|m)?\b", re.I)
+_MONEY = re.compile(r"\$?\s*(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*(billion|bn|million|mn|thousand|m)?\b", re.I)
+_SCALE = {"billion": 1000.0, "bn": 1000.0, "thousand": 0.001}  # to millions; 10-K tables are in thousands
 
 
 def amounts_millions(text: str) -> list[float]:
     out = []
     for m in _MONEY.finditer(text):
         v = float(m[1].replace(",", ""))
-        unit = (m[2] or "").lower()
-        out.append(v * 1000 if unit in ("billion", "bn") else v)
+        out.append(v * _SCALE.get((m[2] or "").lower(), 1.0))
     return out
 
 
 # ---- checks ---------------------------------------------------------------------------------------------------------
 
 
+def unescape(text: str) -> str:
+    r"""Drop Markdown backslash escapes (ACTIVE\_NOT\_RECRUITING, \$170): formatting, not content."""
+    return re.sub(r"\\([_*$#\\-])", r"\1", str(text))
+
+
 def check(spec: dict, answer: str) -> float | None:
     """Score 0, 0.5 or 1 from the question's check spec; None when the judge grades it."""
     kind = spec["type"]
-    text = str(answer)
+    text = unescape(answer)
     low = text.lower()
     if kind == "judge":
         return None
@@ -127,6 +133,8 @@ def check(spec: dict, answer: str) -> float | None:
             return 0.0
         return 1.0 if found[0] == spec["value"] else 0.5
     if kind == "yes_no":
+        if declined(text):  # "NOT IN SOURCES" leads with "not" but says neither yes nor no
+            return 0.0
         first = re.split(r"(?<=[.!?])\s+|\n", text.strip(), maxsplit=1)[0].lower()
         lead = re.match(r"\W*(\w+)", first)
         word = lead[1] if lead else ""
@@ -154,7 +162,8 @@ def check(spec: dict, answer: str) -> float | None:
     if kind == "none_listed":
         if declined(text):
             return 1.0
-        pattern = r"\b(no|not)\b.{0,40}\b(patents?|listed|listings?)\b|\bbiologic|\bBLA\b|purple book"
+        pattern = (r"\b(no|not)\b.{0,40}\b(patents?|listed|listings?|records?|results?|entries)\b"
+                   r"|\bbiologic|\bBLA\b|purple book")  # fmt: skip
         return 1.0 if re.search(pattern, text, re.I) else 0.0
     raise ValueError(f"unknown check {kind}")
 
@@ -222,13 +231,19 @@ def judge(chat, q: dict, answer: str, records: str) -> dict[str, Any]:
 # ---- per-answer grade -------------------------------------------------------------------------------------------
 
 
-def grade(q: dict, answer: str, judged: dict | None = None) -> dict[str, Any]:
-    """Raw and strict grades for one answer. `judged` holds the judge's output for judge-checked questions."""
+def grade(q: dict, answer: str, judged: dict | None = None, human: dict | None = None) -> dict[str, Any]:
+    """Raw and strict grades for one answer. `judged` holds the judge's output for judge-checked questions.
+
+    `human` is set when the judge failed calibration: per the pre-registered fallback, a hand label replaces the
+    judge's correctness grade on judge-checked questions ({"correct": None} means the answer still needs a label).
+    """
     kind = declined(answer)
     raw = check(q["check"], answer)
     judged = judged or {}
+    source = "code"
     if raw is None:
-        raw = judged.get("judge_correct")
+        source = "human" if human is not None else "judge"
+        raw = human.get("correct") if human is not None else judged.get("judge_correct")
     strict = raw
     decline_ok = q["check"]["type"] in ("decline", "none_listed")
     if kind and q["answerable"] and not decline_ok:
@@ -239,6 +254,7 @@ def grade(q: dict, answer: str, judged: dict | None = None) -> dict[str, Any]:
         "declined": bool(kind),
         "correct_raw": raw,
         "correct_strict": strict,
+        "correct_source": source,
         "judge_correct": judged.get("judge_correct"),
         "judge_faithful_raw": faithful_raw,
         "judge_faithful": 1.0 if kind == "exact" else faithful_raw,  # an exact decline is faithful

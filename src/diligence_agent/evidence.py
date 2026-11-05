@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -17,3 +18,20 @@ class Evidence(BaseModel):
     @property
     def key(self) -> str:
         return f"{self.source}:{self.record_id}"
+
+
+_BRACKET = re.compile(r"\[([^\[\]]+)\]")
+_KEY = re.compile(r"^[a-z_]+:\S+$")
+
+
+def _keys(inside: str) -> list[str]:
+    return [p for p in re.split(r"[,;\s]+", inside.strip()) if _KEY.match(p)]
+
+
+def citations(text: str) -> list[str]:
+    """Record keys cited in square brackets, one or several per bracket: [a:1] or [a:1, b:2]."""
+    return [k for m in _BRACKET.finditer(str(text)) for k in _keys(m[1])]
+
+
+def strip_citations(text: str) -> str:
+    return " ".join(_BRACKET.sub(lambda m: "" if _keys(m[1]) else m[0], str(text)).split())

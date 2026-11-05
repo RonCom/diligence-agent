@@ -1,0 +1,28 @@
+{
+ "labels": 40,
+ "matched": 40,
+ "stale_labels": [],
+ "kappa_min": 0.6,
+ "correctness": {
+  "n": 40,
+  "agreement": 0.875,
+  "cohen_kappa": 0.4791666666666669,
+  "human_pass_rate": 0.825,
+  "judge_pass_rate": 0.9,
+  "passes": false
+ },
+ "faithfulness": {
+  "n": 40,
+  "agreement": 0.95,
+  "cohen_kappa": 0.0,
+  "human_pass_rate": 1.0,
+  "judge_pass_rate": 0.95,
+  "passes": false
+ },
+ "judge_counts": false,
+ "judge_vs_code": {
+  "n": 81,
+  "agreement": 0.8765432098765432,
+  "cohen_kappa": 0.5464725643896976
+ }
+}

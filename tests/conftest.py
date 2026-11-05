@@ -9,8 +9,9 @@ from diligence_agent.tools import build_runner
 
 
 @pytest.fixture(autouse=True, scope="session")
-def no_tracing():
-    """Tests write no traces; test_tracing.py turns tracing on against a temporary store."""
+def no_tracing(tmp_path_factory):
+    """Tests write no traces and no runs to the repo; test_tracing.py turns tracing on against its own store."""
+    mlflow.set_tracking_uri(f"sqlite:///{(tmp_path_factory.mktemp('mlflow') / 'mlflow.db').as_posix()}")
     mlflow.tracing.disable()
     yield
 

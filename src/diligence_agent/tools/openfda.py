@@ -55,6 +55,7 @@ class LabelTool(Tool):
         "Returns the requested sections; indications_and_usage lists the approved indications."
     )
     Args = LabelArgs
+    version = 2  # 2: generic name in the record text
 
     def run(self, args: LabelArgs, ctx: ToolContext) -> list[Evidence]:
         q = _quoted(args.drug)
@@ -72,6 +73,8 @@ class LabelTool(Tool):
         for r in labels:
             ofda = r.get("openfda", {})
             brand = ", ".join(ofda.get("brand_name", [])) or args.drug
+            generic = ", ".join(ofda.get("generic_name", []))
+            named = f"{brand} ({generic.lower()})" if generic else brand
             effective = _iso(r.get("effective_time"))
             for section in args.sections:
                 body = " ".join(r.get(section, []))
@@ -83,7 +86,7 @@ class LabelTool(Tool):
                         source="fda_label",
                         record_id=f"{r['set_id']}/{section}@{r.get('effective_time', '')}",
                         url=DAILYMED.format(r["set_id"]),
-                        text=f"{brand} label ({section.replace('_', ' ')}, effective {effective}): {text}",
+                        text=f"{named} label ({section.replace('_', ' ')}, effective {effective}): {text}",
                         fields={
                             "brand": brand,
                             "set_id": r["set_id"],
@@ -108,6 +111,7 @@ class DrugsAtFdaTool(Tool):
         "approved efficacy supplements (new indications or populations) with their dates."
     )
     Args = DrugsAtFdaArgs
+    version = 2  # 2: ingredients field
 
     def run(self, args: DrugsAtFdaArgs, ctx: ToolContext) -> list[Evidence]:
         q = _quoted(args.drug)
@@ -150,6 +154,7 @@ class DrugsAtFdaTool(Tool):
                             "class": cls,
                             "approved": when,
                             "brands": brands,
+                            "ingredients": ingredients,
                         },
                     )
                 )

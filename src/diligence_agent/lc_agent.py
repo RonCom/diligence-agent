@@ -13,7 +13,6 @@ with the same attributes the custom agent's spans carry (tokens, cost, latency, 
 from __future__ import annotations
 
 import json
-import re
 import time
 from dataclasses import dataclass, field
 from datetime import date
@@ -26,13 +25,12 @@ from langchain_core.messages import AIMessage, ToolMessage
 from langchain_core.tools import StructuredTool
 from langchain_ollama import ChatOllama
 
-from diligence_agent.evidence import Evidence
+from diligence_agent.evidence import Evidence, citations
 from diligence_agent.tools.base import ToolOutcome, ToolRunner
 from diligence_agent.tracing import SpanType, cost, model_span_attributes, ollama_timings, sha
 
 DECLINE = "NOT IN SOURCES"
 LIMIT_PREFIX = "Model call limits exceeded"
-CITATION = re.compile(r"\[([a-z_]+:[^\]\s]+)\]")
 
 SYSTEM_PROMPT = """You answer drug diligence questions for an investment team. Today is {today}.
 Use the tools to find records. Answer only from tool results.
@@ -65,7 +63,7 @@ class LcResult:
 
     @property
     def cited(self) -> list[str]:
-        return CITATION.findall(self.answer)
+        return citations(self.answer)
 
     @property
     def declined(self) -> bool:

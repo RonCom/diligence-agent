@@ -122,3 +122,7 @@ preregistered:
                                    # (policy-rag saw 35 of 62 answers change between reruns at temperature 0)
     gold_check: build-eval --check must report "gold unchanged" just before the test run; a changed gold is
       rebuilt and noted before any answer is scored
+
+# ---- Baseline (single-call RAG; set before any baseline score) ---------------------------
+baseline:
+  k: 8                             # records retrieved per question from data/index_baseline (strong corpus)

@@ -1,0 +1,162 @@
+{
+ "L01": {
+  "system": "baseline",
+  "answer_sha": "60f63ec33e13"
+ },
+ "L02": {
+  "system": "baseline",
+  "answer_sha": "b119967fd19c"
+ },
+ "L03": {
+  "system": "baseline",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L04": {
+  "system": "agent",
+  "answer_sha": "00376c644da2"
+ },
+ "L05": {
+  "system": "agent",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L06": {
+  "system": "agent",
+  "answer_sha": "6f8918f202f5"
+ },
+ "L07": {
+  "system": "baseline",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L08": {
+  "system": "langchain",
+  "answer_sha": "bfb3a0dacd1e"
+ },
+ "L09": {
+  "system": "baseline",
+  "answer_sha": "457627fdc1c7"
+ },
+ "L10": {
+  "system": "langchain",
+  "answer_sha": "589013dba8a5"
+ },
+ "L11": {
+  "system": "langchain",
+  "answer_sha": "660c8140e76c"
+ },
+ "L12": {
+  "system": "agent",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L13": {
+  "system": "agent",
+  "answer_sha": "60f63ec33e13"
+ },
+ "L14": {
+  "system": "baseline",
+  "answer_sha": "2ce5b63b182a"
+ },
+ "L15": {
+  "system": "baseline",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L16": {
+  "system": "baseline",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L17": {
+  "system": "langchain",
+  "answer_sha": "c7e51c61be21"
+ },
+ "L18": {
+  "system": "langchain",
+  "answer_sha": "ac4ca9c86f92"
+ },
+ "L19": {
+  "system": "baseline",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L20": {
+  "system": "agent",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L21": {
+  "system": "agent",
+  "answer_sha": "8a63581c3f44"
+ },
+ "L22": {
+  "system": "langchain",
+  "answer_sha": "f629abeb7681"
+ },
+ "L23": {
+  "system": "baseline",
+  "answer_sha": "a4d155de25cf"
+ },
+ "L24": {
+  "system": "langchain",
+  "answer_sha": "2ace569ff5ce"
+ },
+ "L25": {
+  "system": "baseline",
+  "answer_sha": "63a3673ff4d8"
+ },
+ "L26": {
+  "system": "agent",
+  "answer_sha": "91240e202e44"
+ },
+ "L27": {
+  "system": "agent",
+  "answer_sha": "dfbd2e22b55f"
+ },
+ "L28": {
+  "system": "langchain",
+  "answer_sha": "f4b08fffe01f"
+ },
+ "L29": {
+  "system": "agent",
+  "answer_sha": "c185b0a35381"
+ },
+ "L30": {
+  "system": "langchain",
+  "answer_sha": "fe2dce71124d"
+ },
+ "L31": {
+  "system": "agent",
+  "answer_sha": "1d1fca0fc20c"
+ },
+ "L32": {
+  "system": "baseline",
+  "answer_sha": "1ba6c8662e0c"
+ },
+ "L33": {
+  "system": "baseline",
+  "answer_sha": "61baef43cb8a"
+ },
+ "L34": {
+  "system": "langchain",
+  "answer_sha": "8b9f99c3488d"
+ },
+ "L35": {
+  "system": "baseline",
+  "answer_sha": "eb8031cb02d4"
+ },
+ "L36": {
+  "system": "agent",
+  "answer_sha": "a0a5b27dba85"
+ },
+ "L37": {
+  "system": "langchain",
+  "answer_sha": "10ae072c34e0"
+ },
+ "L38": {
+  "system": "baseline",
+  "answer_sha": "a26134a225d6"
+ },
+ "L39": {
+  "system": "langchain",
+  "answer_sha": "7d0611730ad1"
+ },
+ "L40": {
+  "system": "langchain",
+  "answer_sha": "9ffaf3bc1b29"
+ }
+}

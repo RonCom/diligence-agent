@@ -8,6 +8,7 @@ two applications alone have 289 patent rows. Records here collapse those to one 
 from __future__ import annotations
 
 import io
+import re
 import zipfile
 from datetime import datetime
 
@@ -101,7 +102,7 @@ class OrangeBookTool(Tool):
         "expiration date. Biologics (BLAs) are not in the Orange Book."
     )
     Args = OrangeBookArgs
-    version = 2  # 2: latest patent and exclusivity expiry per application and per drug
+    version = 3  # 2: latest expiries per application and drug; 3: drug key without spaces
 
     def run(self, args: OrangeBookArgs, ctx: ToolContext) -> list[Evidence]:
         ob = OrangeBookData.load(ctx)
@@ -223,7 +224,7 @@ def _drug_summary(query: str, apps: list[Evidence], records: list[Evidence]) -> 
     names = ", ".join(f"{a.fields['appl']} ({a.fields['trade_name']})" for a in apps)
     return Evidence(
         source="orange_book",
-        record_id=f"drug/{' '.join(query.split()).upper()}",
+        record_id=f"drug/{re.sub(r'[^A-Z0-9]+', '-', query.upper()).strip('-')}",
         url=apps[0].url,
         text=(
             f"Across {len(apps)} applications matching {query!r} ({names}): "

@@ -1,0 +1,817 @@
+# Labeling guide: judge calibration
+
+Label each answer in `eval/human_labels.csv` (opens in Excel). Fill two columns, and `notes` when useful.
+
+The sheet has draft labels in `draft_correct`, `draft_faithful` and `draft_reason`, written from the full cited
+records (the sheet cuts each record at 700 characters, so some support sits past the cut). The drafts came from a
+model, not from the judge. `calibrate` reads only `human_correct` and `human_faithful`: copy a draft over when you
+agree, and change it when you don't. Rows worth a closer look: L08, L11, L12, L14, L17, L32, L38.
+Don't look up the judge's grades first: they are kept out of the sheet on purpose.
+
+**human_correct**: 1 if the answer states the reference's key facts without contradicting them; 0.5 if it states
+some but not all; 0 if it misses or contradicts them. For an out-of-scope question (reference NOT IN SOURCES), 1 only
+if the answer declines. A decline on an answerable question is 0.
+
+**human_faithful**: 1 if every claim in the answer is supported by the records it cites (shown below the answer);
+0 if any claim is not. Faithful means supported by the records, not true: a wrong answer that quotes its records
+accurately is faithful, and correctness is scored separately. A decline is faithful.
+
+The judge counts only if Cohen's kappa against these labels is at least 0.6, on correctness and on faithfulness
+separately. Below kappa 0.6, these labels replace the judge's correctness grades on the judge-graded questions.
+
+After labeling, run `uv run diligence-agent calibrate`.
+
+## The 40 answers
+
+### L01 (tk21)
+
+**Draft:** correct 1, faithful 1. matches the $475M/$550M reversion; quoted from the footnote
+
+**Question:** When does Royalty Pharma's royalty interest in Spinraza revert to Ionis?
+
+**Reference:** It reverts to Ionis after Royalty Pharma receives aggregate Spinraza royalties of $475 million or $550 million, depending on the timing and occurrence of certain events
+
+**Answer:**
+
+> Royalty Pharma's royalty interest in Spinraza will revert to Ionis after the company receives aggregate Spinraza royalties equal to either $475 million or $550 million, depending on the timing and occurrence of certain events [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (7)We are entitled to royalties on U.S. sales of cabozantinib products through September 2026 and non-U.S. markets through the full term of the royalty.
+(8)Our royalty interest in Spinraza will revert to Ionis after we receive aggregate Spinraza royalties equal to $475 million or $550 million, depending on the timing and occurrence of certain events. We are entitled to 25% of Ionis’ Spinraza royalty payments of 11% to 15% on sales up to $1.5 billion through 2027, increasing to 45% of royalty payments on sales up to $1.5 billion in 2028.
+(9)We are entitled to royalties on worldwide net sales of Imdelltra,
+```
+
+### L02 (tk05)
+
+**Draft:** correct 1, faithful 1. 18%/25% tiers in the table; 'perpetual' and 'end date of 2035' are in footnote (3) of the Item 8 record
+
+**Question:** What royalty rate does Royalty Pharma receive on Tysabri, according to its latest 10-K?
+
+**Reference:** Tiered payments of 18% on first $2 billion and 25% on sales >$2 billion (10-K Portfolio Summary).
+
+**Answer:**
+
+> The royalty for Tysabri is tiered, with payments of 18% on the first $2 billion and 25% on sales exceeding $2 billion [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1]. Additionally, a record notes that the royalty for Tysabri is perpetual, and an end date of 2035 was applied for income accretion purposes, though the royalty is perpetual [sec_filing:rprx-10-k-2025/item-8-financial-statements-and-supplementary-data-as-of-december-31-2024-2/1].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: The table below provides a summary of the acquisition year, estimated royalty duration, royalty rates and the ownership percentages attributable to Royalty Pharma, net of legacy non-controlling interests for selected approved products in our portfolio:
+Products | Acquisition Year(s) | Estimated Royalty Duration (1) | Royalty Rates (2) | Attributable to Royalty Pharma (3)
+Cystic fibrosis franchise (4) | 2014, 2020 | 2039-2041 | Blended royalty of slightly over 9% for Trikafta; See footnote (4) | 86.8%
+Trelegy (5) | 2022 | 2029-2030 | Tiered royalty of 6.5% on first $750 million, up to 10% on sales >$2.25 
+[sec_filing:rprx-10-k-2025/item-8-financial-statements-and-supplementary-data-as-of-december-31-2024-2/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 8. Financial Statements and Supplementary Data > As of December 31, 2024: Estimated Royalty Duration (1) | Gross Carrying Value | Cumulative Allowance for Changes in Expected Cash Flows (Note 9) | Net Carrying Value (4)
+Cystic fibrosis franchise | 2039-2041 (2) | 5,126,521 | ( 259,353 ) | 4,867,168
+Evrysdi | 2035-2036 | 2,085,851 | ( 378,565 ) | 1,707,286
+Trelegy | 2029-2030 | 1,121,980 | ( 66,647 ) | 1,055,333
+Tysabri (3) | 1,319,298 | ( 276,134 ) | 1,043,164
+Voranigo | 2038 | 946,588 | — | 946,588
+Tremfya | 2031-2032 | 935,069 | ( 77,895 ) | 857,174
+Other | 2025-2042 | 8,164,902 | ( 2,492,565 ) | 5,672,337
+Total | 19,700,209 | ( 3,551
+```
+
+### L03 (oos11)
+
+**Draft:** correct 1, faithful 1. out of scope, declined
+
+**Question:** What's Imbruvica's U.S. market share in CLL right now?
+
+**Reference:** NOT IN SOURCES
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L04 (tk01)
+
+**Draft:** correct 1, faithful 1. 'Slightly less than 4%' is in the table row; the Item 7 record lists 'Astellas and Pfizer's Xtandi' (garbled wording, same fact)
+
+**Question:** What cut of Xtandi sales does Royalty Pharma get?
+
+**Reference:** Slightly less than 4% royalty (10-K Portfolio Summary).
+
+**Answer:**
+
+> Royalty Pharma receives a royalty for Xtandi that is described as "Slightly less than 4%" [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1]. Xtandi is also listed as one of the therapies for which Royalty Pharma has royalties, alongside Astellas and Pfizer [sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-2/1].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: The table below provides a summary of the acquisition year, estimated royalty duration, royalty rates and the ownership percentages attributable to Royalty Pharma, net of legacy non-controlling interests for selected approved products in our portfolio:
+Products | Acquisition Year(s) | Estimated Royalty Duration (1) | Royalty Rates (2) | Attributable to Royalty Pharma (3)
+Cystic fibrosis franchise (4) | 2014, 2020 | 2039-2041 | Blended royalty of slightly over 9% for Trikafta; See footnote (4) | 86.8%
+Trelegy (5) | 2022 | 2029-2030 | Tiered royalty of 6.5% on first $750 million, up to 10% on sales >$2.25 
+[sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-2/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS > Business Overview: We are the largest buyer of biopharmaceutical royalties and a leading funder of innovation across the biopharmaceutical industry. Since our founding in 1996, we have been pioneers in the royalty market, collaborating with innovators from academic institutions, research hospitals and not-for-profits through small and mid-cap biotechnology companies to leading global pharmaceutical companies. We have assembled a portfolio of royalties which entitles us to payments based directly on the top-line sales of many of the industry’s lead
+```
+
+### L05 (win06)
+
+**Draft:** correct 0, faithful 1. decline on an answerable question (guide rule: 0); a decline is faithful
+
+**Question:** Which Phase 3 trials of sacituzumab govitecan that are recruiting, active or not yet recruiting have a primary completion date between 2026-11-04 and 2027-11-04? List their NCT numbers.
+
+**Reference:** 5 trials: NCT04595565, NCT04639986, NCT05382286, NCT05609968, NCT05633654.
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L06 (cnf01)
+
+**Draft:** correct 1, faithful 1. both dates right; both in the cited records
+
+**Question:** When do Trikafta's patents expire? Compare Royalty Pharma's 10-K with the FDA Orange Book.
+
+**Reference:** 10-K: We estimate expected Trikafta patent expiration in 2037 Orange Book: the last-expiring Trikafta patent expires 2038-07-17
+
+**Answer:**
+
+> The FDA Orange Book indicates that the latest-expiring patent for Trikafta (COPACKAGED) is patent 12350262, which expires on 2038-07-17 [orange_book:drug/TRIKAFTA]. In contrast, Royalty Pharma's 10-K estimates the Trikafta patent expiration in 2037 [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3].
+
+**Cited records:**
+
+```
+[orange_book:drug/TRIKAFTA] Across 2 applications matching 'Trikafta' (N212273 (TRIKAFTA (COPACKAGED)), N217660 (TRIKAFTA (COPACKAGED))): latest-expiring patent 12350262 (N212273), expires 2038-07-17. Latest-expiring exclusivity ODE-543 (N212273), expires 2033-03-27.
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (3)Ownership percentages for cystic fibrosis franchise and Erleada represent blended percentages across multiple royalty interests based on 2025 Royalty Receipts.
+(4)Royalty is perpetual. We estimate royalty duration of 2039-2041 due to expected Alyftrek patent expiration and potential generic entry thereafter leading to sales decline. We estimate expected Trikafta patent expiration in 2037 and potential generic entry thereafter leading to sales decline. For combination therapies, sales are allocated equally to each of the active pharmaceutical ingredients, with tiered royalties ranging from single digit
+```
+
+### L07 (trl04)
+
+**Draft:** correct 0, faithful 1. decline on an answerable question (guide rule: 0); a decline is faithful
+
+**Question:** What is the current overall status and primary completion date of NCT04455750?
+
+**Reference:** NCT04455750 is ACTIVE_NOT_RECRUITING, primary completion 2027-03-15.
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L08 (bla01)
+
+**Draft:** correct 1, faithful 1. says the Orange Book has no records for Tremfya, which matches 'lists no patents'; no citation, but it reports an empty search
+
+**Question:** When does the last-expiring FDA Orange Book patent listed for Tremfya expire?
+
+**Reference:** Tremfya is a biologic (BLA); the Orange Book lists no patents for it.
+
+**Answer:**
+
+> The Orange Book search for "Tremfya" returned no records.
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L09 (tk20)
+
+**Draft:** correct 1, faithful 1. 8% vs 4% and the dispute are both in the full records (past the 700-char cut)
+
+**Question:** What royalty rate does Royalty Pharma expect on Alyftrek, and what is in dispute about it?
+
+**Reference:** Royalty Pharma believes deutivacaftor is royalty-bearing, giving a blended royalty of about 8% Vertex says deutivacaftor is not royalty-bearing, which would give about 4%
+
+**Answer:**
+
+> Royalty Pharma estimates a blended royalty of approximately 8% for Alyftrek if deuterated ivacaftor (deutivacaftor) is considered royalty-bearing, while Vertex believes it is not royalty-bearing, which would result in a blended royalty of approximately 4% for Alyftrek [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3]. Furthermore, Royalty Pharma commenced dispute resolution procedures because it did not receive the full amount of royalty receipts on Alyftrek net sales to which it believes it is contractually entitled, beginning in the second quarter of 2025 [sec_filing:rprx-10-k-2025/item-1a-risk-factors-general-risk-factors/6].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (3)Ownership percentages for cystic fibrosis franchise and Erleada represent blended percentages across multiple royalty interests based on 2025 Royalty Receipts.
+(4)Royalty is perpetual. We estimate royalty duration of 2039-2041 due to expected Alyftrek patent expiration and potential generic entry thereafter leading to sales decline. We estimate expected Trikafta patent expiration in 2037 and potential generic entry thereafter leading to sales decline. For combination therapies, sales are allocated equally to each of the active pharmaceutical ingredients, with tiered royalties ranging from single digit
+[sec_filing:rprx-10-k-2025/item-1a-risk-factors-general-risk-factors/6] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1A. RISK FACTORS > General Risk Factors: Beginning in the second quarter of 2025, we did not receive from Vertex the full amount of royalty receipts on Alyftrek net sales to which we believe that we are contractually entitled. Accordingly, we commenced the dispute resolution procedures contemplated by the agreements relating to our royalties on Vertex’s cystic fibrosis products. Any amounts receivable by us, if any, in connection with this dispute will be recognized only upon the resolution of the matter in our favor.
+The resolution of, or increase in the reserves taken in connection with, one or more of these matters could adversely af
+```
+
+### L10 (tk05)
+
+**Draft:** correct 1, faithful 1. tiers and 'Perpetual' are in the Tysabri table row
+
+**Question:** What royalty rate does Royalty Pharma receive on Tysabri, according to its latest 10-K?
+
+**Reference:** Tiered payments of 18% on first $2 billion and 25% on sales >$2 billion (10-K Portfolio Summary).
+
+**Answer:**
+
+> The royalty rate Royalty Pharma receives on Tysabri is tiered: 18% on the first $2 billion in sales and 25% on sales exceeding $2 billion [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1]. Tysabri is noted as having a perpetual royalty duration [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: The table below provides a summary of the acquisition year, estimated royalty duration, royalty rates and the ownership percentages attributable to Royalty Pharma, net of legacy non-controlling interests for selected approved products in our portfolio:
+Products | Acquisition Year(s) | Estimated Royalty Duration (1) | Royalty Rates (2) | Attributable to Royalty Pharma (3)
+Cystic fibrosis franchise (4) | 2014, 2020 | 2039-2041 | Blended royalty of slightly over 9% for Trikafta; See footnote (4) | 86.8%
+Trelegy (5) | 2022 | 2029-2030 | Tiered royalty of 6.5% on first $750 million, up to 10% on sales >$2.25 
+```
+
+### L11 (tk20)
+
+**Draft:** correct 1, faithful 0. key facts right; but the second claim says the dispute 'relates to' consensus estimates; the cited record says that's why a provision expense was booked, not what the dispute is about
+
+**Question:** What royalty rate does Royalty Pharma expect on Alyftrek, and what is in dispute about it?
+
+**Reference:** Royalty Pharma believes deutivacaftor is royalty-bearing, giving a blended royalty of about 8% Vertex says deutivacaftor is not royalty-bearing, which would give about 4%
+
+**Answer:**
+
+> Based on the 10-K filing for the period ending December 31, 2025, Royalty Pharma estimates a blended royalty of approximately 8% for Alyftrek, assuming deuterated ivacaftor is royalty-bearing. However, Vertex has publicly stated that it believes deuterated ivacaftor is not royalty-bearing, which would result in a blended royalty of approximately 4% for Alyftrek [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3]. Furthermore, the company commenced dispute resolution procedures because they did not receive the full amount of royalty receipts on Alyftrek net sales to which they believe they are contractually entitled, and this dispute relates to the inclusion of consensus estimates for Alyftrek and the conservative assumption that royalties will only be collected on the tezacaftor component and not on the deuterated ivacaftor component [sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-19/3].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (3)Ownership percentages for cystic fibrosis franchise and Erleada represent blended percentages across multiple royalty interests based on 2025 Royalty Receipts.
+(4)Royalty is perpetual. We estimate royalty duration of 2039-2041 due to expected Alyftrek patent expiration and potential generic entry thereafter leading to sales decline. We estimate expected Trikafta patent expiration in 2037 and potential generic entry thereafter leading to sales decline. For combination therapies, sales are allocated equally to each of the active pharmaceutical ingredients, with tiered royalties ranging from single digit
+[sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-19/3] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS > Income from financial royalty assets: In 2024, we recorded provision expense of $732.5 million, comprised of $632.0 million in provision expense for changes in expected cash flows and $100.4 million in provision expense for current expected credit losses. We recorded provision expense for changes in expected cash flows primarily related to Evrysdi due to declines in sell-side equity research analysts’ consensus sales forecasts. We recorded provision expense for changes in expected cash flows related to the cystic fibrosis franchise, primarily due 
+```
+
+### L12 (bla01)
+
+**Draft:** correct 1, faithful 1. decline on a no-patents question; the pre-registered none_listed check accepts a decline. Set 0 if you read the guide's decline rule strictly
+
+**Question:** When does the last-expiring FDA Orange Book patent listed for Tremfya expire?
+
+**Reference:** Tremfya is a biologic (BLA); the Orange Book lists no patents for it.
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L13 (tk21)
+
+**Draft:** correct 1, faithful 1. matches the reference; quoted from the footnote
+
+**Question:** When does Royalty Pharma's royalty interest in Spinraza revert to Ionis?
+
+**Reference:** It reverts to Ionis after Royalty Pharma receives aggregate Spinraza royalties of $475 million or $550 million, depending on the timing and occurrence of certain events
+
+**Answer:**
+
+> Royalty Pharma's royalty interest in Spinraza will revert to Ionis after the company receives aggregate Spinraza royalties equal to either $475 million or $550 million, depending on the timing and occurrence of certain events [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (7)We are entitled to royalties on U.S. sales of cabozantinib products through September 2026 and non-U.S. markets through the full term of the royalty.
+(8)Our royalty interest in Spinraza will revert to Ionis after we receive aggregate Spinraza royalties equal to $475 million or $550 million, depending on the timing and occurrence of certain events. We are entitled to 25% of Ionis’ Spinraza royalty payments of 11% to 15% on sales up to $1.5 billion through 2027, increasing to 45% of royalty payments on sales up to $1.5 billion in 2028.
+(9)We are entitled to royalties on worldwide net sales of Imdelltra,
+```
+
+### L14 (cnf01)
+
+**Draft:** correct 0.5, faithful 1. 10-K 2037 right; the Orange Book half cites a SPINRAZA exclusivity, not a Trikafta patent. The Spinraza claim is supported by its record, so faithful
+
+**Question:** When do Trikafta's patents expire? Compare Royalty Pharma's 10-K with the FDA Orange Book.
+
+**Reference:** 10-K: We estimate expected Trikafta patent expiration in 2037 Orange Book: the last-expiring Trikafta patent expires 2038-07-17
+
+**Answer:**
+
+> Royalty Pharma estimates the expected Trikafta patent expiration in 2037 [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3]. The FDA Orange Book indicates that the exclusivity for SPINRAZA expires on 2029-03-27 [orange_book:N209531/exclusivity/NS/2029-03-27].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (3)Ownership percentages for cystic fibrosis franchise and Erleada represent blended percentages across multiple royalty interests based on 2025 Royalty Receipts.
+(4)Royalty is perpetual. We estimate royalty duration of 2039-2041 due to expected Alyftrek patent expiration and potential generic entry thereafter leading to sales decline. We estimate expected Trikafta patent expiration in 2037 and potential generic entry thereafter leading to sales decline. For combination therapies, sales are allocated equally to each of the active pharmaceutical ingredients, with tiered royalties ranging from single digit
+[orange_book:N209531/exclusivity/NS/2029-03-27] FDA Orange Book, exclusivity: Exclusivity NS (see the Orange Book exclusivity code list) for SPINRAZA (N209531, products 002, 003) expires 2029-03-27.
+```
+
+### L15 (ind10)
+
+**Draft:** correct 0, faithful 1. decline on an answerable question (guide rule: 0); a decline is faithful
+
+**Question:** Is Voranigo FDA-approved for glioblastoma?
+
+**Reference:** No: the current Voranigo label does not list it.
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L16 (oos15)
+
+**Draft:** correct 1, faithful 1. out of scope, declined
+
+**Question:** What does a course of Evrysdi cost in Japan?
+
+**Reference:** NOT IN SOURCES
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L17 (ind10)
+
+**Draft:** correct 1, faithful 1. lists the approved indications and says glioblastoma isn't among them: a 'no' without the word. Code scores this 0, which is why it's worth your call
+
+**Question:** Is Voranigo FDA-approved for glioblastoma?
+
+**Reference:** No: the current Voranigo label does not list it.
+
+**Answer:**
+
+> Voranigo is FDA-approved for the treatment of adult and pediatric patients 12 years and older with Grade 2 astrocytoma or oligodendroglioma with a susceptible isocitrate dehydrogenase-1 (IDH1) or isocitrate dehydrogenase-2 (IDH2) mutation, following surgery [fda_label:31405fee-55b7-4857-987e-2724ee76be84/indications_and_usage@20260619]. The provided label does not list glioblastoma as an approved indication.
+
+**Cited records:**
+
+```
+[fda_label:31405fee-55b7-4857-987e-2724ee76be84/indications_and_usage@20260619] Voranigo label (indications and usage, effective 2026-06-19): 1 INDICATIONS AND USAGE VORANIGO is indicated for the treatment of adult and pediatric patients 12 years and older with Grade 2 astrocytoma or oligodendroglioma with a susceptible isocitrate dehydrogenase-1 (IDH1) or isocitrate dehydrogenase-2 (IDH2) mutation, as detected by an FDA-approved test, following surgery including biopsy, sub-total resection, or gross total resection [see Dosage and Administration (2.1) , Clinical Pharmacology (12.1) and Clinical Studies (14) ]. VORANIGO is an isocitrate dehydrogenase-1 (IDH1) and isocitrate dehydrogenase-2 (IDH2) inhibitor indicated for the treatment of adult and pediatric patients 12 y
+```
+
+### L18 (app06)
+
+**Draft:** correct 1, faithful 1. date matches the record
+
+**Question:** On what date did the FDA first approve Voranigo?
+
+**Reference:** NDA218784 was approved 2024-08-06.
+
+**Answer:**
+
+> The FDA first approved Voranigo on 2024-08-06 [drugs_at_fda:NDA218784/ORIG-1].
+
+**Cited records:**
+
+```
+[drugs_at_fda:NDA218784/ORIG-1] VORANIGO (VORASIDENIB), NDA218784, sponsor SERVIER: original approval 2024-08-06.
+```
+
+### L19 (oos01)
+
+**Draft:** correct 1, faithful 1. out of scope, declined
+
+**Question:** What is the U.S. list price (WAC) for a month of Trikafta?
+
+**Reference:** NOT IN SOURCES
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L20 (win04)
+
+**Draft:** correct 0, faithful 1. decline on an answerable question (guide rule: 0); a decline is faithful
+
+**Question:** Which Phase 3 trials of apalutamide that are recruiting, active or not yet recruiting have a primary completion date between 2026-11-04 and 2027-11-04? List their NCT numbers.
+
+**Reference:** 4 trials: NCT02531516, NCT03767244, NCT03903835, NCT06274047.
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L21 (tk14)
+
+**Draft:** correct 1, faithful 1. $170M is in the Imbruvica table row; -$20.7M is in the Item 7 record (both past the 700-char cut)
+
+**Question:** What were Royalty Pharma's 2025 Portfolio Receipts from Imbruvica?
+
+**Reference:** $170 million in 2025 Portfolio Receipts.
+
+**Answer:**
+
+> Royalty Pharma's 2025 Portfolio Receipts from Imbruvica were \$170 million [sec_filing:rprx-10-k-2025/item-1-business-portfolio-overview/1]. Additionally, the Royalty Receipts from Imbruvica decreased by \$20.7 million in 2025 compared to 2024 [sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-27/5].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-overview/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Overview: The following table provides an overview of our current portfolio of royalties on approved products, including end market sales of the therapies in our portfolio:
+Products | Marketer(s) | Therapeutic Area | Product Detail | 2025 Portfolio Receipts (in millions) | 2025 End Market Sales (in millions) (1)
+Cystic fibrosis franchise (2) | Vertex | Rare disease | Cystic fibrosis | $917 | $11,725
+Trelegy | GSK | Respiratory | Chronic obstructive pulmonary disease and asthma | 332 | 3,912
+Tysabri | Biogen | Neuroscience | Relapsing forms of multiple sclerosis | 250 | 1,665
+Evrysdi | Roche | Rare disease | Spina
+[sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-27/5] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS > Portfolio Overview: •Tremfya – Royalty Receipts from Tremfya, which is marketed by Johnson & Johnson for the treatment of plaque psoriasis, active psoriatic arthritis and inflammatory bowel disease, increased by $38.8 million in 2025 as compared to 2024, driven by share gains and market growth, including strong uptake across recently launched inflammatory bowel disease indications, partially offset by the impact of Medicare Part D redesign.
+•Imbruvica – Royalty Receipts from Imbruvica, which is marketed by AbbVie and Johnson & Johnson for the trea
+```
+
+### L22 (app09)
+
+**Draft:** correct 1, faithful 1. 2008-11-20 right; the 2015 kit record is extra but supported
+
+**Question:** On what date did the FDA first approve Promacta?
+
+**Reference:** NDA022291 was approved 2008-11-20.
+
+**Answer:**
+
+> The FDA first approved Promacta (Eltrombopag Olamine) on 2008-11-20 under NDA022291 [drugs_at_fda:NDA022291/ORIG-1]. There is also a record for PROMACTA KIT (ELTROMBOPAG OLAMINE) with an original approval date of 2015-08-24 [drugs_at_fda:NDA207027/ORIG-1].
+
+**Cited records:**
+
+```
+[drugs_at_fda:NDA022291/ORIG-1] PROMACTA (ELTROMBOPAG OLAMINE), NDA022291, sponsor NOVARTIS: original approval 2008-11-20.
+[drugs_at_fda:NDA207027/ORIG-1] PROMACTA KIT (ELTROMBOPAG OLAMINE), NDA207027, sponsor NOVARTIS: original approval 2015-08-24.
+```
+
+### L23 (tk01)
+
+**Draft:** correct 1, faithful 1. 'Slightly less than 4%' is in the Xtandi table row (past the cut)
+
+**Question:** What cut of Xtandi sales does Royalty Pharma get?
+
+**Reference:** Slightly less than 4% royalty (10-K Portfolio Summary).
+
+**Answer:**
+
+> Royalty Pharma has a slightly less than 4% royalty on Xtandi [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: The table below provides a summary of the acquisition year, estimated royalty duration, royalty rates and the ownership percentages attributable to Royalty Pharma, net of legacy non-controlling interests for selected approved products in our portfolio:
+Products | Acquisition Year(s) | Estimated Royalty Duration (1) | Royalty Rates (2) | Attributable to Royalty Pharma (3)
+Cystic fibrosis franchise (4) | 2014, 2020 | 2039-2041 | Blended royalty of slightly over 9% for Trikafta; See footnote (4) | 86.8%
+Trelegy (5) | 2022 | 2029-2030 | Tiered royalty of 6.5% on first $750 million, up to 10% on sales >$2.25 
+```
+
+### L24 (pat12)
+
+**Draft:** correct 1, faithful 1. patent and date match the record
+
+**Question:** When does the last-expiring FDA Orange Book patent listed for Farxiga expire?
+
+**Reference:** Patent 12409186*PED expires 2041-10-01.
+
+**Answer:**
+
+> The last-expiring FDA Orange Book patent listed for Farxiga is Patent 12409186*PED, which expires on 2041-10-01 [orange_book:N202293/patent/12409186*PED].
+
+**Cited records:**
+
+```
+[orange_book:N202293/patent/12409186*PED] Patent 12409186*PED is listed for FARXIGA (N202293, products 002) and expires 2041-10-01. Claims: method of use only. Use codes: none.
+```
+
+### L25 (exc06)
+
+**Draft:** correct 1, faithful 1. ODE-400, 2029-05-27, in both records
+
+**Question:** What is the latest-expiring FDA regulatory exclusivity listed for Evrysdi in the Orange Book, and when does it expire?
+
+**Reference:** Exclusivity ODE-400 expires 2029-05-27.
+
+**Answer:**
+
+> The latest-expiring exclusivity listed for EVRYSDI is ODE-400, which expires on 2029-05-27 [orange_book:drug/EVRYSDI]. Specifically, for application N213535, the ODE-400 exclusivity expires on 2029-05-27 [orange_book:N213535/exclusivity/ODE-400/2029-05-27].
+
+**Cited records:**
+
+```
+[orange_book:drug/EVRYSDI] FDA Orange Book, EVRYSDI: Across 2 applications matching 'Evrysdi' (N213535 (EVRYSDI), N219285 (EVRYSDI)): latest-expiring patent 12122789 (N213535), expires 2041-04-15. Latest-expiring exclusivity ODE-400 (N213535), expires 2029-05-27.
+[orange_book:N213535/exclusivity/ODE-400/2029-05-27] FDA Orange Book, exclusivity: Exclusivity ODE-400 (orphan drug) for EVRYSDI (N213535, products 001) expires 2029-05-27.
+```
+
+### L26 (tk20)
+
+**Draft:** correct 1, faithful 1. 8%/4% in footnote (4); dispute text in the risk-factor and legal-proceedings records
+
+**Question:** What royalty rate does Royalty Pharma expect on Alyftrek, and what is in dispute about it?
+
+**Reference:** Royalty Pharma believes deutivacaftor is royalty-bearing, giving a blended royalty of about 8% Vertex says deutivacaftor is not royalty-bearing, which would give about 4%
+
+**Answer:**
+
+> Royalty Pharma has two potential blended royalty rates for Alyftrek: approximately 8% if deuterated ivacaftor (deutivacaftor) is considered royalty-bearing, or approximately 4% if Vertex's public statements are correct that it is not royalty-bearing [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3]. The dispute is that beginning in the second quarter of 2025, Royalty Pharma did not receive the full amount of royalty receipts on Alyftrek net sales that it believes it is contractually entitled to, leading them to commence dispute resolution procedures [sec_filing:rprx-10-k-2025/item-1a-risk-factors-general-risk-factors/6, sec_filing:rprx-10-k-2025/item-8-financial-statements-and-supplementary-data-legal-proceedings/1].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (3)Ownership percentages for cystic fibrosis franchise and Erleada represent blended percentages across multiple royalty interests based on 2025 Royalty Receipts.
+(4)Royalty is perpetual. We estimate royalty duration of 2039-2041 due to expected Alyftrek patent expiration and potential generic entry thereafter leading to sales decline. We estimate expected Trikafta patent expiration in 2037 and potential generic entry thereafter leading to sales decline. For combination therapies, sales are allocated equally to each of the active pharmaceutical ingredients, with tiered royalties ranging from single digit
+[sec_filing:rprx-10-k-2025/item-1a-risk-factors-general-risk-factors/6] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1A. RISK FACTORS > General Risk Factors: Beginning in the second quarter of 2025, we did not receive from Vertex the full amount of royalty receipts on Alyftrek net sales to which we believe that we are contractually entitled. Accordingly, we commenced the dispute resolution procedures contemplated by the agreements relating to our royalties on Vertex’s cystic fibrosis products. Any amounts receivable by us, if any, in connection with this dispute will be recognized only upon the resolution of the matter in our favor.
+The resolution of, or increase in the reserves taken in connection with, one or more of these matters could adversely af
+[sec_filing:rprx-10-k-2025/item-8-financial-statements-and-supplementary-data-legal-proceedings/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 8. Financial Statements and Supplementary Data > Legal Proceedings: We are a party to legal actions with respect to a variety of matters in the ordinary course of business. Some of these proceedings may be based on complex claims involving substantial uncertainties and unascertainable damages. Unless otherwise noted, it is not possible to determine the probability of loss or estimate damages, and therefore we have not established accruals for any of these proceedings on our consolidated balance sheets as of December 31, 2025 and 2024. When we determine that a loss is both probable and reasonably estimable, we record a liability, and, if
+```
+
+### L27 (exc03)
+
+**Draft:** correct 1, faithful 1. matches the record
+
+**Question:** What is the latest-expiring FDA regulatory exclusivity listed for Voranigo in the Orange Book, and when does it expire?
+
+**Reference:** Exclusivity ODE-491 expires 2031-08-06.
+
+**Answer:**
+
+> The latest-expiring regulatory exclusivity listed for Voranigo in the Orange Book is ODE-491, which expires on 2031-08-06 [orange_book:N218784/exclusivity/ODE-491/2031-08-06].
+
+**Cited records:**
+
+```
+[orange_book:N218784/exclusivity/ODE-491/2031-08-06] Exclusivity ODE-491 (orphan drug) for VORANIGO (N218784, products 001, 002) expires 2031-08-06.
+```
+
+### L28 (tk01)
+
+**Draft:** correct 1, faithful 1. 4% and 82.4% are both in the Xtandi table row
+
+**Question:** What cut of Xtandi sales does Royalty Pharma get?
+
+**Reference:** Slightly less than 4% royalty (10-K Portfolio Summary).
+
+**Answer:**
+
+> Based on the Royalty Pharma plc 10-K filing for the period ending 2025-12-31, the royalty for Xtandi is described as "Slightly less than 4% royalty" [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1]. Additionally, the filing notes that the attributable percentage for Xtandi is 82.4% [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: The table below provides a summary of the acquisition year, estimated royalty duration, royalty rates and the ownership percentages attributable to Royalty Pharma, net of legacy non-controlling interests for selected approved products in our portfolio:
+Products | Acquisition Year(s) | Estimated Royalty Duration (1) | Royalty Rates (2) | Attributable to Royalty Pharma (3)
+Cystic fibrosis franchise (4) | 2014, 2020 | 2039-2041 | Blended royalty of slightly over 9% for Trikafta; See footnote (4) | 86.8%
+Trelegy (5) | 2022 | 2029-2030 | Tiered royalty of 6.5% on first $750 million, up to 10% on sales >$2.25 
+```
+
+### L29 (trl04)
+
+**Draft:** correct 1, faithful 1. status and date match the record
+
+**Question:** What is the current overall status and primary completion date of NCT04455750?
+
+**Reference:** NCT04455750 is ACTIVE_NOT_RECRUITING, primary completion 2027-03-15.
+
+**Answer:**
+
+> The current status of NCT04455750 is ACTIVE\_NOT\_RECRUITING [ctgov:NCT04455750], and its primary completion date is 2027-03-15 [ctgov:NCT04455750].
+
+**Cited records:**
+
+```
+[ctgov:NCT04455750] NCT04455750: A Clinical Study Evaluating The Benefit of Adding Rucaparib to Enzalutamide for Men With Metastatic Prostate Cancer That Has Become Resistant To Testosterone-Deprivation Therapy. Phase: PHASE3. Status: ACTIVE_NOT_RECRUITING. Primary completion: 2027-03-15. Lead sponsor: Alliance for Clinical Trials in Oncology. Conditions: Castration-Resistant Prostate Carcinoma, Metastatic Prostate Adenocarcinoma, Stage IV Prostate Cancer AJCC v8, Stage IVA Prostate Cancer AJCC v8, Stage IVB Prostate Cancer AJCC v8. Interventions: Enzalutamide, Rucaparib camsylate, Placebo, Leuprolide Acetate, Goserelin Acetate, Degarelix, Quality-of-Life Assessment, Questionnaire Administration.
+```
+
+### L30 (win04)
+
+**Draft:** correct 1, faithful 1. all 4 NCT IDs, statuses and dates match their records; all in the window
+
+**Question:** Which Phase 3 trials of apalutamide that are recruiting, active or not yet recruiting have a primary completion date between 2026-11-04 and 2027-11-04? List their NCT numbers.
+
+**Reference:** 4 trials: NCT02531516, NCT03767244, NCT03903835, NCT06274047.
+
+**Answer:**
+
+> The Phase 3 trials of apalutamide that are recruiting, active not recruiting, or not yet recruiting with a primary completion date between 2026-11-04 and 2027-11-04 are:
+
+*   **NCT06274047** (Recruiting, Primary completion: 2027-06-30) [ctgov:NCT06274047]
+*   **NCT03903835** (Recruiting, Primary completion: 2026-12) [ctgov:NCT03903835]
+*   **NCT03767244** (Active Not Recruiting, Primary completion: 2026-12-01) [ctgov:NCT03767244]
+*   **NCT02531516** (Active Not Recruiting, Primary completion: 2027-03-01) [ctgov:NCT02531516]
+
+**Cited records:**
+
+```
+[ctgov:NCT06274047] NCT06274047: PROSTATE-IQ: Parallel RandOmized STudy of Personalized Apalutamide Treatment and Evaluation to Improve Quality of Life in Post-Operative Radiation With Androgen Axis Suppression. A Phase III Multi-center Study for Men With Detectable PSA After Prostatectomy for Prostate Cancer.. Phase: PHASE3. Status: RECRUITING. Primary completion: 2027-06-30. Lead sponsor: M.D. Anderson Cancer Center. Conditions: Androgen Axis Suppression, Prostatectomy, Prostate Cancer. Interventions: Apalutamide, Androgen Deprivation Therapy.
+[ctgov:NCT03903835] NCT03903835: ProBio: A Biomarker Driven Study in Patients With Metastatic Prostate Cancer. Phase: PHASE3. Status: RECRUITING. Primary completion: 2026-12. Lead sponsor: Karolinska Institutet. Conditions: Metastatic Castration-resistant Prostate Cancer (mCRPC), Metastatic Hormone-Sensitive Prostate Cancer (mHSPC). Interventions: Enzalutamide Oral Capsule, Abiraterone Oral Tablet, Carboplatin, Cabazitaxel 60 mg Solution for Injection, Docetaxel Injectable Solution, Radium Chloride Ra-223, Niraparib plus Abiraterone acetate plus Prednisone, Capivasertib plus Docetaxel, Apalutamide, Darolutamide.
+[ctgov:NCT03767244] NCT03767244: A Study of Apalutamide in Participants With High-Risk, Localized or Locally Advanced Prostate Cancer Who Are Candidates for Radical Prostatectomy. Phase: PHASE3. Status: ACTIVE_NOT_RECRUITING. Primary completion: 2026-12-01. Lead sponsor: Janssen Research & Development, LLC. Conditions: Prostatic Neoplasms. Interventions: Apalutamide, Androgen Deprivation Therapy (ADT), Placebo.
+[ctgov:NCT02531516] NCT02531516: An Efficacy and Safety Study of JNJ-56021927 (Apalutamide) in High-risk Prostate Cancer Subjects Receiving Primary Radiation Therapy: ATLAS. Phase: PHASE3. Status: ACTIVE_NOT_RECRUITING. Primary completion: 2027-03-01. Lead sponsor: Aragon Pharmaceuticals, Inc.. Conditions: Prostatic Neoplasms. Interventions: Apalutamide, Bicalutamide, Bicalutamide Placebo, Apalutamide Placebo, GnRH (agonist), 74-80 Grays (units of radiation).
+```
+
+### L31 (tk05)
+
+**Draft:** correct 1, faithful 1. tiers and 'Perpetual' are in the Tysabri table row
+
+**Question:** What royalty rate does Royalty Pharma receive on Tysabri, according to its latest 10-K?
+
+**Reference:** Tiered payments of 18% on first $2 billion and 25% on sales >$2 billion (10-K Portfolio Summary).
+
+**Answer:**
+
+> Royalty Pharma receives tiered payments for Tysabri: 18% on the first \$2 billion in sales and 25% on sales exceeding \$2 billion [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1]. The estimated royalty duration for Tysabri is Perpetual [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/1] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: The table below provides a summary of the acquisition year, estimated royalty duration, royalty rates and the ownership percentages attributable to Royalty Pharma, net of legacy non-controlling interests for selected approved products in our portfolio:
+Products | Acquisition Year(s) | Estimated Royalty Duration (1) | Royalty Rates (2) | Attributable to Royalty Pharma (3)
+Cystic fibrosis franchise (4) | 2014, 2020 | 2039-2041 | Blended royalty of slightly over 9% for Trikafta; See footnote (4) | 86.8%
+Trelegy (5) | 2022 | 2029-2030 | Tiered royalty of 6.5% on first $750 million, up to 10% on sales >$2.25 
+```
+
+### L32 (bla01)
+
+**Draft:** correct 1, faithful 1. same as L12: a decline the none_listed check accepts. Set 0 if strict
+
+**Question:** When does the last-expiring FDA Orange Book patent listed for Tremfya expire?
+
+**Reference:** Tremfya is a biologic (BLA); the Orange Book lists no patents for it.
+
+**Answer:**
+
+> NOT IN SOURCES
+
+**Cited records:**
+
+```
+(none)
+```
+
+### L33 (app03)
+
+**Draft:** correct 0, faithful 1. gives the March 2025 Crohn's approval, not the 2017-07-13 first approval; the claim itself is in its record
+
+**Question:** On what date did the FDA first approve Tremfya?
+
+**Reference:** BLA761061 was approved 2017-07-13.
+
+**Answer:**
+
+> Johnson & Johnson announced that the FDA approved Tremfya in Crohn’s disease in March 2025 [sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-28/2].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-7-management-s-discussion-and-analysis-of-financial-condition-and-results-of-operatio-28/2] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 7. MANAGEMENT’S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS > Commercial Products: In March 2025, Johnson & Johnson announced that the FDA approved Tremfya in Crohn’s disease, which is now the first and only IL-23 offering both subcutaneous and intravenous induction options for the treatment of adults with moderately to severely active Crohn’s disease.
+•Promacta. In May 2025, Camber Pharmaceuticals announced the U.S. launch of eltrombopag, the AB-rated generic for Promacta.
+•Cabometyx. In July 2025, Ipsen announced that the EC approved Cabometyx for patients with previously treated advanced neuroendocrine tu
+```
+
+### L34 (tk21)
+
+**Draft:** correct 1, faithful 1. matches the reference; quoted from the footnote
+
+**Question:** When does Royalty Pharma's royalty interest in Spinraza revert to Ionis?
+
+**Reference:** It reverts to Ionis after Royalty Pharma receives aggregate Spinraza royalties of $475 million or $550 million, depending on the timing and occurrence of certain events
+
+**Answer:**
+
+> The royalty interest in Spinraza will revert to Ionis after Royalty Pharma receives aggregate Spinraza royalties equal to either $475 million or $550 million, depending on the timing and occurrence of certain events [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (7)We are entitled to royalties on U.S. sales of cabozantinib products through September 2026 and non-U.S. markets through the full term of the royalty.
+(8)Our royalty interest in Spinraza will revert to Ionis after we receive aggregate Spinraza royalties equal to $475 million or $550 million, depending on the timing and occurrence of certain events. We are entitled to 25% of Ionis’ Spinraza royalty payments of 11% to 15% on sales up to $1.5 billion through 2027, increasing to 45% of royalty payments on sales up to $1.5 billion in 2028.
+(9)We are entitled to royalties on worldwide net sales of Imdelltra,
+```
+
+### L35 (pat04)
+
+**Draft:** correct 0, faithful 1. says 2029-08-13 from N203188 and misses 8883206*PED (2033-08-27) on N207925; both patents it names are in their records
+
+**Question:** When does the last-expiring FDA Orange Book patent listed for Kalydeco expire?
+
+**Reference:** Patent 8883206*PED expires 2033-08-27.
+
+**Answer:**
+
+> The last-expiring FDA Orange Book patent listed for KALYDECO (N203188, products 001) is Patent 11564916, which expires on 2029-08-13 [orange_book:N203188/patent/11564916]. Another patent, Patent 12458635, also expires on 2029-08-13 [orange_book:N203188/patent/12458635].
+
+**Cited records:**
+
+```
+[orange_book:N203188/patent/11564916] FDA Orange Book, patent: Patent 11564916 is listed for KALYDECO (N203188, products 001) and expires 2029-08-13. Claims: method of use only. Use codes: U-3530.
+[orange_book:N203188/patent/12458635] FDA Orange Book, patent: Patent 12458635 is listed for KALYDECO (N203188, products 001) and expires 2029-08-13. Claims: drug product. Use codes: U-4339.
+```
+
+### L36 (exc06)
+
+**Draft:** correct 1, faithful 1. ODE-400, 2029-05-27, in both records
+
+**Question:** What is the latest-expiring FDA regulatory exclusivity listed for Evrysdi in the Orange Book, and when does it expire?
+
+**Reference:** Exclusivity ODE-400 expires 2029-05-27.
+
+**Answer:**
+
+> The latest-expiring exclusivity listed for Evrysdi in the Orange Book is ODE-400 for application N213535, which expires on 2029-05-27 [orange_book:drug/RISDIPLAM]. Another source indicates the latest-expiring exclusivity is ODE-400 for N213535, expiring 2029-05-27 [orange_book:drug/EVRYSDI].
+
+**Cited records:**
+
+```
+[orange_book:drug/RISDIPLAM] Across 2 applications matching 'risdiplam' (N213535 (EVRYSDI), N219285 (EVRYSDI)): latest-expiring patent 12122789 (N213535), expires 2041-04-15. Latest-expiring exclusivity ODE-400 (N213535), expires 2029-05-27.
+[orange_book:drug/EVRYSDI] Across 2 applications matching 'Evrysdi' (N213535 (EVRYSDI), N219285 (EVRYSDI)): latest-expiring patent 12122789 (N213535), expires 2041-04-15. Latest-expiring exclusivity ODE-400 (N213535), expires 2029-05-27.
+```
+
+### L37 (ind05)
+
+**Draft:** correct 1, faithful 1. 'yes' with the label's cardiomyopathy indication, quoted
+
+**Question:** Can Amvuttra be prescribed on-label for the cardiomyopathy of transthyretin-mediated amyloidosis?
+
+**Reference:** Yes: the current Amvuttra label lists it.
+
+**Answer:**
+
+> Yes, Amvuttra is indicated on-label for the cardiomyopathy of wild-type or hereditary transthyretin-mediated amyloidosis in adults to reduce cardiovascular mortality, cardiovascular hospitalizations, and urgent heart failure visits [fda_label:8db0facb-81b6-4006-9239-27dc6409c5d3/indications_and_usage@20251106].
+
+**Cited records:**
+
+```
+[fda_label:8db0facb-81b6-4006-9239-27dc6409c5d3/indications_and_usage@20251106] AMVUTTRA (vutrisiran) label (indications and usage, effective 2025-11-06): 1 INDICATIONS AND USAGE AMVUTTRA is a transthyretin-directed small interfering RNA indicated for the treatment of: the polyneuropathy of hereditary transthyretin-mediated amyloidosis in adults ( 1.1 ) the cardiomyopathy of wild-type or hereditary transthyretin-mediated amyloidosis in adults to reduce cardiovascular mortality, cardiovascular hospitalizations and urgent heart failure visits ( 1.2 ) 1.1 Polyneuropathy of Hereditary Transthyretin-mediated Amyloidosis AMVUTTRA is indicated for the treatment of the polyneuropathy of hereditary transthyretin-mediated amyloidosis (hATTR-PN) in adults. 1.2 Cardiomyopathy of Wi
+```
+
+### L38 (tk22)
+
+**Draft:** correct 1, faithful 1. the question asks only about U.S. sales; September 2026 is in footnote (7). Leaving out non-U.S. doesn't cost it
+
+**Question:** Until when does Royalty Pharma receive royalties on U.S. sales of cabozantinib products?
+
+**Reference:** Through September 2026 for U.S. sales; non-U.S. markets through the full term of the royalty
+
+**Answer:**
+
+> Royalty Pharma is entitled to royalties on U.S. sales of cabozantinib products through September 2026 [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4] and [sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3].
+
+**Cited records:**
+
+```
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/4] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (7)We are entitled to royalties on U.S. sales of cabozantinib products through September 2026 and non-U.S. markets through the full term of the royalty.
+(8)Our royalty interest in Spinraza will revert to Ionis after we receive aggregate Spinraza royalties equal to $475 million or $550 million, depending on the timing and occurrence of certain events. We are entitled to 25% of Ionis’ Spinraza royalty payments of 11% to 15% on sales up to $1.5 billion through 2027, increasing to 45% of royalty payments on sales up to $1.5 billion in 2028.
+(9)We are entitled to royalties on worldwide net sales of Imdelltra,
+[sec_filing:rprx-10-k-2025/item-1-business-portfolio-summary/3] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Portfolio Summary: (3)Ownership percentages for cystic fibrosis franchise and Erleada represent blended percentages across multiple royalty interests based on 2025 Royalty Receipts.
+(4)Royalty is perpetual. We estimate royalty duration of 2039-2041 due to expected Alyftrek patent expiration and potential generic entry thereafter leading to sales decline. We estimate expected Trikafta patent expiration in 2037 and potential generic entry thereafter leading to sales decline. For combination therapies, sales are allocated equally to each of the active pharmaceutical ingredients, with tiered royalties ranging from single digit
+```
+
+### L39 (cnf01)
+
+**Draft:** correct 1, faithful 1. 2038-07-17 from the patent record; 'exclusivity through 2037' is in the business-model record (past the cut)
+
+**Question:** When do Trikafta's patents expire? Compare Royalty Pharma's 10-K with the FDA Orange Book.
+
+**Reference:** 10-K: We estimate expected Trikafta patent expiration in 2037 Orange Book: the last-expiring Trikafta patent expires 2038-07-17
+
+**Answer:**
+
+> The FDA Orange Book indicates that the latest-expiring patent for Trikafta (COPACKAGED) is patent 12350262, which expires on 2038-07-17 [orange_book:N212273/patent/12350262]. In contrast, Royalty Pharma's 10-K filing estimates that existing patent applications covering Trikafta are expected to provide exclusivity through 2037 [sec_filing:rprx-10-k-2025/item-1-business-our-business-model/2].
+
+**Cited records:**
+
+```
+[orange_book:N212273/patent/12350262] Patent 12350262 is listed for TRIKAFTA (COPACKAGED) (N212273, products 001, 002) and expires 2038-07-17. Claims: method of use only. Use codes: U-4221, U-4222, U-4475.
+[sec_filing:rprx-10-k-2025/item-1-business-our-business-model/2] Royalty Pharma plc 10-K, period ending 2025-12-31, Item 1. BUSINESS > Our Business Model: Our portfolio provides direct exposure to a broad array of blockbuster therapies. As of December 31, 2025, our portfolio included royalties on 16 therapies that each generated end-market sales of more than $1 billion in 2025, including 7 therapies that each generated end-market sales of $3 billion or more. The therapies within our portfolio are marketed by leading global biopharmaceutical companies for whom these products are important sources of revenue. Given the marketers’ significant focus on and investment in these products, they are motivated to invest substantial resources in driving continued sa
+```
+
+### L40 (pat04)
+
+**Draft:** correct 1, faithful 1. patent and date match the summary record
+
+**Question:** When does the last-expiring FDA Orange Book patent listed for Kalydeco expire?
+
+**Reference:** Patent 8883206*PED expires 2033-08-27.
+
+**Answer:**
+
+> The last-expiring FDA Orange Book patent listed for Kalydeco is patent 8883206*PED (from application N207925), which expires on 2033-08-27 [orange_book:drug/KALYDECO].
+
+**Cited records:**
+
+```
+[orange_book:drug/KALYDECO] Across 2 applications matching 'Kalydeco' (N203188 (KALYDECO), N207925 (KALYDECO)): latest-expiring patent 8883206*PED (N207925), expires 2033-08-27. Latest-expiring exclusivity PED (N207925), expires 2030-11-03.
+```
