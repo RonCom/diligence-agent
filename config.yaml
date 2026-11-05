@@ -1,0 +1,32 @@
+# ---- Models (Ollama, local) ----------------------------------------------------------
+ollama_url: http://localhost:11434
+chat_model: gemma4:e4b             # planner, researcher, verifier, writer (native tool calling)
+judge_model: gemma4:26b            # grades 10-K answers; larger than the model it grades
+temperature: 0
+pricing: {}                        # USD per 1M tokens by model id; local models cost $0
+
+# ---- Budgets per request (agent stops with a partial answer when one is hit) ------------
+budgets:
+  max_steps: 12
+  max_tokens: 60000                # prompt + completion, summed over the request
+  max_usd: 0.0                     # only enforced when a priced model is configured
+  max_wall_clock_s: 600
+loop_detection:
+  repeat_calls: 2                  # the same tool with the same normalized arguments twice
+  steps_without_new_evidence: 3
+
+# ---- Tools ------------------------------------------------------------------------------
+data_dir: data
+http:
+  timeout_s: 20                    # per HTTP request
+  max_retries: 3                   # exponential backoff with full jitter; Retry-After honored
+  backoff_base_s: 1.0
+  backoff_cap_s: 30.0
+  rate_limits:                     # requests per second, per host
+    www.sec.gov: 5                 # SEC allows 10
+    data.sec.gov: 5
+    eutils.ncbi.nlm.nih.gov: 3     # NCBI allows 3 without an API key
+    api.fda.gov: 4                 # openFDA allows 240 per minute
+    clinicaltrials.gov: 3
+    www.fda.gov: 1
+tool_timeout_s: 60                 # wall clock per tool call, including retries

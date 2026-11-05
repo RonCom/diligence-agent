@@ -1,0 +1,101 @@
+{
+ "meta": {
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "terms": "https://open.fda.gov/terms/",
+  "license": "https://open.fda.gov/license/",
+  "last_updated": "2026-11-04",
+  "results": {
+   "skip": 0,
+   "limit": 1,
+   "total": 1
+  }
+ },
+ "results": [
+  {
+   "boxed_warning": [
+    "WARNING: DRUG-INDUCED LIVER INJURY AND LIVER FAILURE TRIKAFTA can cause serious and potentially fatal drug-induced liver injury. Cases of liver failure leading to transplantation and death have been reported in patients with and without a history of liver disease taking TRIKAFTA, in both clinical trials and the postmarketing setting [see Adverse Reactions (6) ]. Liver injury has been reported within the first month of therapy and up to 15 months following initiation of TRIKAFTA . Assess liver function tests (ALT, AST, alkaline phosphatase, and bilirubin) in all patients prior to initiating TRIKAFTA. Assess liver function tests every month during the first 6 months of treatment, then every 3 months for the next 12 months, then at least annually thereafter. Consider more frequent monitoring for patients with a history of liver disease or liver function test elevations at baseline [see Dosage and Administration (2.1) , Warnings and Precautions (5.1) , Adverse Reactions (6) and Use in Specific Populations (8.7) ] . Interrupt TRIKAFTA for significant elevations in liver function tests or in the event of signs or symptoms of liver injury. Consider referral to a hepatologist. Follow patients closely with clinical and laboratory monitoring until abnormalities resolve. If abnormalities resolve, resume treatment only if the benefit is expected to outweigh the risk. Closer monitoring is advised after resuming TRIKAFTA [see Warnings and Precautions (5.1) ] . TRIKAFTA should not be used in patients with severe hepatic impairment (Child-Pugh Class C). TRIKAFTA is not recommended in patients with moderate hepatic impairment (Child-Pugh Class B). If used, use with caution at a reduced dosage and monitor patients closely [see Dosage and Administration (2.3) , Warnings and Precautions (5.1) , Adverse Reactions (6) , Use in Specific Populations (8.7) and Clinical Pharmacology (12.3) ] . WARNING: DRUG-INDUCED LIVER INJURY AND LIVER FAILURE See full prescribing information for complete boxed warning. TRIKAFTA can cause serious and potentially fatal drug-induced liver injury. Liver failure leading to transplantation and death has been reported. ( 5.1 , 6 ) Assess liver function tests (ALT, AST, alkaline phosphatase, bilirubin) in all patients prior to initiating TRIKAFTA. ( 2.1 , 5.1 ) Monitor liver function tests (ALT, AST, alkaline phosphatase, bilirubin) every month for the first 6 months of treatment, then every 3 months for the next 12 months, then at least annually. ( 2.1 , 5.1 ) Interrupt TRIKAFTA for significant elevations in liver function tests or signs or symptoms of liver injury. Follow patients closely with clinical and laboratory monitoring until abnormalities resolve. ( 5.1 ) Resume TRIKAFTA if abnormalities resolve and only if the benefit is expected to outweigh the risk. ( 5.1 ) TRIKAFTA should not be used in patients with severe hepatic impairment (Child-Pugh Class C). TRIKAFTA is not recommended in patients with moderate hepatic impairment (Child-Pugh Class B). ( 2.3 , 5.1 , 8.7 , 12.3 )"
+   ],
+   "indications_and_usage": [
+    "1 INDICATIONS AND USAGE TRIKAFTA is indicated for the treatment of cystic fibrosis (CF) in adult and pediatric patients aged 2 years and older who have a clinical diagnosis of CF and who have at least one variant in the cystic fibrosis transmembrane conductance regulator ( CFTR ) gene that is either responsive based on clinical and/or in vitro data (see Table 6 ) or results in production of CFTR protein [see Clinical Pharmacology (12.1) ] . If the patient's genotype is unknown, an FDA-cleared CF genetic test should be used to confirm the presence of at least one variant in the CFTR gene that is either responsive based on clinical and/or in vitro data or results in production of CFTR protein. TRIKAFTA is a combination of ivacaftor, a CFTR potentiator, tezacaftor, and elexacaftor indicated for the treatment of cystic fibrosis (CF) in adult and pediatric patients aged 2 years and older who have a clinical diagnosis of CF and who have at least one variant in the CFTR gene that is either responsive based on clinical and/or in vitro data or results in production of CFTR protein. ( 1 , 12.1 ) If the patient's genotype is unknown, an FDA-cleared CF genetic test should be used to confirm the presence of at least one variant in the CFTR gene that is either responsive based on clinical and/or in vitro data or results in production of CFTR protein. ( 1 )"
+   ],
+   "dosage_and_administration": [
+    "2 DOSAGE AND ADMINISTRATION Prior to initiating TRIKAFTA obtain liver function tests (ALT, AST, alkaline phosphatase, and bilirubin) in all patients. Monitor liver function tests every month during the first 6 months of treatment, then every 3 months during the next 12 months, then at least annually thereafter. ( 2.1 , 5.1) Recommended Dosage for Adult and Pediatric Patients Aged 2 Years and Older (with fat-containing food ( 2.2 , 12.3 )) Age Weight Morning Dose Evening Dose 2 to less than 6 years Less than 14 kg One packet containing elexacaftor 80 mg/tezacaftor 40 mg/ivacaftor 60 mg oral granules One packet containing ivacaftor 59.5 mg oral granules 14 kg or more One packet containing elexacaftor 100 mg/tezacaftor 50 mg/ivacaftor 75 mg oral granules One packet containing ivacaftor 75 mg oral granules 6 to less than 12 years Less than 30 kg Two tablets, each containing elexacaftor 50 mg/tezacaftor 25 mg/ivacaftor 37.5 mg One tablet of ivacaftor 75 mg 30 kg or more Two tablets, each containing elexacaftor 100 mg/tezacaftor 50 mg/ivacaftor 75 mg One tablet of ivacaftor 150 mg 12 years and older - Two tablets, each containing elexacaftor 100 mg/tezacaftor 50 mg/ivacaftor 75 mg One tablet of ivacaftor 150 mg Should not be used in patients with severe hepatic impairment. Use not recommended in patients with moderate hepatic impairment unless the benefit outweighs the risk. Reduce dose if used in patients with moderate hepatic impairment. Liver function tests should be closely mon"
+   ],
+   "contraindications": [
+    "4 CONTRAINDICATIONS None. None. ( 4 )"
+   ],
+   "warnings_and_cautions": [
+    "5 WARNINGS AND PRECAUTIONS Drug-induced liver injury and liver failure : TRIKAFTA can cause serious and potentially fatal drug-induced liver injury. Assess liver function tests (ALT, AST, alkaline phosphatase, bilirubin) in all patients prior to initiating and throughout treatment with TRIKAFTA. Interrupt TRIKAFTA in the event of significant elevations in liver function tests or signs or symptoms of liver injury. TRIKAFTA should not be used in patients with severe hepatic impairment (Child-Pugh Class C). TRIKAFTA is not recommended in patients with moderate hepatic impairment (Child-Pugh Class B). ( 2.1 , 2.3 , 5.1 , 6 , 8.7 , 12.3 ) Hypersensitivity reactions : Angioedema and anaphylaxis have been reported with TRIKAFTA in the postmarketing setting. Initiate appropriate therapy in the event of a hypersensitivity reaction. ( 5.2 ) Intracranial hypertension : Intracranial hypertension (IH) has been reported in the postmarketing setting with the use of TRIKAFTA. If an unusual headache or visual disturbances occur during treatment, and IH is suspected, interrupt TRIKAFTA and refer for prompt medical evaluation. ( 5.3 ) Neuropsychiatric events, including suicidal thoughts and behaviors : Serious neuropsychiatric events, including symptoms of anxiety, depression, suicidal ideation and behavior, and sleep disturbances, have been reported in the postmarketing setting for TRIKAFTA or drugs containing the same or similar active ingredients. Monitor patients closely for new or worsenin"
+   ],
+   "set_id": "f354423a-85c2-41c3-a9db-0f3aee135d8d",
+   "id": "b63ac090-8d8b-43a0-82d1-558127f2d598",
+   "effective_time": "20260622",
+   "version": "23",
+   "openfda": {
+    "application_number": [
+     "NDA212273",
+     "NDA217660"
+    ],
+    "brand_name": [
+     "Trikafta"
+    ],
+    "generic_name": [
+     "ELEXACAFTOR, TEZACAFTOR, AND IVACAFTOR"
+    ],
+    "manufacturer_name": [
+     "Vertex Pharmaceuticals Incorporated"
+    ],
+    "product_ndc": [
+     "51167-106",
+     "51167-331",
+     "51167-445",
+     "51167-446"
+    ],
+    "product_type": [
+     "HUMAN PRESCRIPTION DRUG"
+    ],
+    "rxcui": [
+     "1243046",
+     "1606868",
+     "2174388",
+     "2257011",
+     "2257012",
+     "2257013",
+     "2557214",
+     "2557215",
+     "2557216",
+     "2635013",
+     "2635020",
+     "2635021",
+     "2635022",
+     "2635024",
+     "2635025",
+     "2635026"
+    ],
+    "spl_id": [
+     "b63ac090-8d8b-43a0-82d1-558127f2d598"
+    ],
+    "spl_set_id": [
+     "f354423a-85c2-41c3-a9db-0f3aee135d8d"
+    ],
+    "package_ndc": [
+     "51167-331-01",
+     "51167-431-14",
+     "51167-531-07",
+     "51167-106-02",
+     "51167-206-14",
+     "51167-306-07",
+     "51167-445-01",
+     "51167-545-07",
+     "51167-645-07",
+     "51167-446-01",
+     "51167-746-07",
+     "51167-846-07"
+    ],
+    "is_original_packager": [
+     true
+    ]
+   }
+  }
+ ]
+}

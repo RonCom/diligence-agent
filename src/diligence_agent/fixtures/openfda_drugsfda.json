@@ -1,0 +1,490 @@
+{
+ "meta": {
+  "disclaimer": "Do not rely on openFDA to make decisions regarding medical care. While we make every effort to ensure that data is accurate, you should assume all results are unvalidated. We may limit or otherwise restrict your access to the API in line with our Terms of Service.",
+  "terms": "https://open.fda.gov/terms/",
+  "license": "https://open.fda.gov/license/",
+  "last_updated": "2026-11-04",
+  "results": {
+   "skip": 0,
+   "limit": 5,
+   "total": 2
+  }
+ },
+ "results": [
+  {
+   "submissions": [
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "9",
+     "submission_status": "AP",
+     "submission_status_date": "20250925",
+     "review_priority": "STANDARD",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "5",
+     "submission_status": "AP",
+     "submission_status_date": "20241220",
+     "review_priority": "901 REQUIRED",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "3",
+     "submission_status": "AP",
+     "submission_status_date": "20241220",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "EFFICACY",
+     "submission_class_code_description": "Efficacy",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "ORIG",
+     "submission_number": "1",
+     "submission_status": "AP",
+     "submission_status_date": "20230426",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "TYPE 3",
+     "submission_class_code_description": "Type 3 - New Dosage Form",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "10",
+     "submission_status": "AP",
+     "submission_status_date": "20260317",
+     "review_priority": "901 REQUIRED",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "8",
+     "submission_status": "AP",
+     "submission_status_date": "20260327",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "EFFICACY",
+     "submission_class_code_description": "Efficacy",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "2",
+     "submission_status": "AP",
+     "submission_status_date": "20230803",
+     "review_priority": "STANDARD",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    }
+   ],
+   "application_number": "NDA217660",
+   "sponsor_name": "VERTEX PHARMS INC",
+   "openfda": {
+    "application_number": [
+     "NDA217660"
+    ],
+    "brand_name": [
+     "TRIKAFTA"
+    ],
+    "generic_name": [
+     "ELEXACAFTOR, TEZACAFTOR, AND IVACAFTOR"
+    ],
+    "manufacturer_name": [
+     "Vertex Pharmaceuticals Incorporated"
+    ],
+    "product_ndc": [
+     "51167-445",
+     "51167-331",
+     "51167-106",
+     "51167-446"
+    ],
+    "product_type": [
+     "HUMAN PRESCRIPTION DRUG"
+    ],
+    "rxcui": [
+     "1243046",
+     "1606868",
+     "2174388",
+     "2257011",
+     "2257012",
+     "2257013",
+     "2557214",
+     "2557215",
+     "2557216",
+     "2635013",
+     "2635020",
+     "2635021",
+     "2635022",
+     "2635024",
+     "2635025",
+     "2635026"
+    ],
+    "spl_id": [
+     "b63ac090-8d8b-43a0-82d1-558127f2d598"
+    ],
+    "spl_set_id": [
+     "f354423a-85c2-41c3-a9db-0f3aee135d8d"
+    ],
+    "package_ndc": [
+     "51167-331-01",
+     "51167-431-14",
+     "51167-531-07",
+     "51167-106-02",
+     "51167-206-14",
+     "51167-306-07",
+     "51167-445-01",
+     "51167-545-07",
+     "51167-645-07",
+     "51167-446-01",
+     "51167-746-07",
+     "51167-846-07"
+    ]
+   },
+   "products": [
+    {
+     "product_number": "001",
+     "reference_drug": "Yes",
+     "brand_name": "TRIKAFTA (COPACKAGED)",
+     "active_ingredients": [
+      {
+       "name": "ELEXACAFTOR, IVACAFTOR, TEZACAFTOR",
+       "strength": "80MG, 60MG, 40MG"
+      },
+      {
+       "name": "IVACAFTOR",
+       "strength": "59.5MG"
+      }
+     ],
+     "reference_standard": "No",
+     "dosage_form": "GRANULE",
+     "route": "ORAL",
+     "marketing_status": "Prescription"
+    },
+    {
+     "product_number": "002",
+     "reference_drug": "Yes",
+     "brand_name": "TRIKAFTA (COPACKAGED)",
+     "active_ingredients": [
+      {
+       "name": "ELEXACAFTOR, IVACAFTOR, TEZACAFTOR",
+       "strength": "100MG, 75MG, 50MG"
+      },
+      {
+       "name": "IVACAFTOR",
+       "strength": "75MG"
+      }
+     ],
+     "reference_standard": "Yes",
+     "dosage_form": "GRANULE",
+     "route": "ORAL",
+     "marketing_status": "Prescription"
+    }
+   ]
+  },
+  {
+   "submissions": [
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "13",
+     "submission_status": "AP",
+     "submission_status_date": "20241220",
+     "review_priority": "901 REQUIRED",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "4",
+     "submission_status": "AP",
+     "submission_status_date": "20210608",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "EFFICACY",
+     "submission_class_code_description": "Efficacy",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "11",
+     "submission_status": "AP",
+     "submission_status_date": "20230803",
+     "review_priority": "STANDARD",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "2",
+     "submission_status": "AP",
+     "submission_status_date": "20201221",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "EFFICACY",
+     "submission_class_code_description": "Efficacy",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "9",
+     "submission_status": "AP",
+     "submission_status_date": "20230426",
+     "review_priority": "STANDARD",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling"
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "14",
+     "submission_status": "AP",
+     "submission_status_date": "20260327",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "EFFICACY",
+     "submission_class_code_description": "Efficacy",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "12",
+     "submission_status": "AP",
+     "submission_status_date": "20241220",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "EFFICACY",
+     "submission_class_code_description": "Efficacy",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "1",
+     "submission_status": "AP",
+     "submission_status_date": "20201118",
+     "review_priority": "STANDARD",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "17",
+     "submission_status": "AP",
+     "submission_status_date": "20260317",
+     "review_priority": "901 REQUIRED",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "8",
+     "submission_status": "AP",
+     "submission_status_date": "20211004",
+     "review_priority": "STANDARD",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "ORIG",
+     "submission_number": "1",
+     "submission_status": "AP",
+     "submission_status_date": "20191021",
+     "review_priority": "PRIORITY",
+     "submission_class_code": "TYPE 1/4",
+     "submission_class_code_description": "Type 1 - New Molecular Entity and Type 4 - New Combination",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    },
+    {
+     "submission_type": "SUPPL",
+     "submission_number": "15",
+     "submission_status": "AP",
+     "submission_status_date": "20250925",
+     "review_priority": "STANDARD",
+     "submission_class_code": "LABELING",
+     "submission_class_code_description": "Labeling",
+     "submission_property_type": [
+      {
+       "code": "Orphan"
+      }
+     ]
+    }
+   ],
+   "application_number": "NDA212273",
+   "sponsor_name": "VERTEX PHARMS INC",
+   "openfda": {
+    "application_number": [
+     "NDA212273"
+    ],
+    "brand_name": [
+     "TRIKAFTA"
+    ],
+    "generic_name": [
+     "ELEXACAFTOR, TEZACAFTOR, AND IVACAFTOR"
+    ],
+    "manufacturer_name": [
+     "Vertex Pharmaceuticals Incorporated"
+    ],
+    "product_ndc": [
+     "51167-106",
+     "51167-331",
+     "51167-445",
+     "51167-446"
+    ],
+    "product_type": [
+     "HUMAN PRESCRIPTION DRUG"
+    ],
+    "rxcui": [
+     "1243046",
+     "1606868",
+     "2174388",
+     "2257011",
+     "2257012",
+     "2257013",
+     "2557214",
+     "2557215",
+     "2557216",
+     "2635013",
+     "2635020",
+     "2635021",
+     "2635022",
+     "2635024",
+     "2635025",
+     "2635026"
+    ],
+    "spl_id": [
+     "b63ac090-8d8b-43a0-82d1-558127f2d598"
+    ],
+    "spl_set_id": [
+     "f354423a-85c2-41c3-a9db-0f3aee135d8d"
+    ],
+    "package_ndc": [
+     "51167-331-01",
+     "51167-431-14",
+     "51167-531-07",
+     "51167-106-02",
+     "51167-206-14",
+     "51167-306-07",
+     "51167-445-01",
+     "51167-545-07",
+     "51167-645-07",
+     "51167-446-01",
+     "51167-746-07",
+     "51167-846-07"
+    ]
+   },
+   "products": [
+    {
+     "product_number": "001",
+     "reference_drug": "Yes",
+     "brand_name": "TRIKAFTA (COPACKAGED)",
+     "active_ingredients": [
+      {
+       "name": "ELEXACAFTOR, IVACAFTOR, TEZACAFTOR",
+       "strength": "100MG,75MG,50MG"
+      },
+      {
+       "name": "IVACAFTOR",
+       "strength": "150MG"
+      }
+     ],
+     "reference_standard": "Yes",
+     "dosage_form": "TABLET",
+     "route": "ORAL",
+     "marketing_status": "Prescription"
+    },
+    {
+     "product_number": "002",
+     "reference_drug": "Yes",
+     "brand_name": "TRIKAFTA (COPACKAGED)",
+     "active_ingredients": [
+      {
+       "name": "ELEXACAFTOR, IVACAFTOR, TEZACAFTOR",
+       "strength": "50MG,37.5MG,25MG"
+      },
+      {
+       "name": "IVACAFTOR",
+       "strength": "75MG"
+      }
+     ],
+     "reference_standard": "No",
+     "dosage_form": "TABLET",
+     "route": "ORAL",
+     "marketing_status": "Prescription"
+    }
+   ]
+  }
+ ]
+}

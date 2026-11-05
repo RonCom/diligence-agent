@@ -1,0 +1,32 @@
+[project]
+name = "diligence-agent"
+version = "0.1.0"
+description = "A local tool-calling agent that answers drug diligence questions from FDA, ClinicalTrials.gov, SEC EDGAR and PubMed records, with every claim cited"
+readme = "README.md"
+authors = [{ name = "Chris Lavelle" }]
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "langchain>=1.4.9",
+    "langchain-ollama>=1.1.0",
+    "pandas>=2.2",
+    "pydantic>=2.7",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+diligence-agent = "diligence_agent.__main__:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[build-system]
+requires = ["uv_build>=0.8.17,<0.9.0"]
+build-backend = "uv_build"

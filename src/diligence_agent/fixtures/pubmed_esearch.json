@@ -1,0 +1,30 @@
+{
+ "header": {
+  "type": "esearch",
+  "version": "0.3"
+ },
+ "esearchresult": {
+  "count": "12",
+  "retmax": "2",
+  "retstart": "0",
+  "idlist": [
+   "41738096",
+   "40210412"
+  ],
+  "translationset": [
+   {
+    "from": "elexacaftor",
+    "to": "\"elexacaftor\"[Supplementary Concept] OR \"elexacaftor\"[All Fields]"
+   },
+   {
+    "from": "phase",
+    "to": "\"phase\"[All Fields] OR \"phase's\"[All Fields] OR \"phases\"[All Fields]"
+   },
+   {
+    "from": "randomized",
+    "to": "\"random allocation\"[MeSH Terms] OR (\"random\"[All Fields] AND \"allocation\"[All Fields]) OR \"random allocation\"[All Fields] OR \"randomization\"[All Fields] OR \"randomized\"[All Fields] OR \"random\"[All Fields] OR \"randomisation\"[All Fields] OR \"randomisations\"[All Fields] OR \"randomise\"[All Fields] OR \"randomised\"[All Fields] OR \"randomising\"[All Fields] OR \"randomizations\"[All Fields] OR \"randomize\"[All Fields] OR \"randomizes\"[All Fields] OR \"randomizing\"[All Fields] OR \"randomness\"[All Fields] OR \"randoms\"[All Fields]"
+   }
+  ],
+  "querytranslation": "(\"elexacaftor\"[Supplementary Concept] OR \"elexacaftor\"[All Fields]) AND (\"phase\"[All Fields] OR \"phase s\"[All Fields] OR \"phases\"[All Fields]) AND \"3\"[All Fields] AND (\"random allocation\"[MeSH Terms] OR (\"random\"[All Fields] AND \"allocation\"[All Fields]) OR \"random allocation\"[All Fields] OR \"randomization\"[All Fields] OR \"randomized\"[All Fields] OR \"random\"[All Fields] OR \"randomisation\"[All Fields] OR \"randomisations\"[All Fields] OR \"randomise\"[All Fields] OR \"randomised\"[All Fields] OR \"randomising\"[All Fields] OR \"randomizations\"[All Fields] OR \"randomize\"[All Fields] OR \"randomizes\"[All Fields] OR \"randomizing\"[All Fields] OR \"randomness\"[All Fields] OR \"randoms\"[All Fields])"
+ }
+}

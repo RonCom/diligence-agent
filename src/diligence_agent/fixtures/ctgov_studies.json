@@ -1,0 +1,121 @@
+{
+ "studies": [
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT03691779",
+     "briefTitle": "Evaluation of VX 445/TEZ/IVA in Cystic Fibrosis Subjects 6 Through 11 Years of Age"
+    },
+    "statusModule": {
+     "overallStatus": "COMPLETED",
+     "primaryCompletionDateStruct": {
+      "date": "2020-08-07"
+     }
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "Vertex Pharmaceuticals Incorporated"
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "Cystic Fibrosis"
+     ]
+    },
+    "designModule": {
+     "phases": [
+      "PHASE3"
+     ]
+    },
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "name": "ELX/TEZ/IVA"
+      },
+      {
+       "name": "IVA"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT04545515",
+     "briefTitle": "A Study Evaluating the Long-term Safety and Efficacy of Elexacaftor/Tezacaftor/Ivacaftor in Cystic Fibrosis (CF) Particpants 6 Years and Older and F/MF Genotypes"
+    },
+    "statusModule": {
+     "overallStatus": "COMPLETED",
+     "primaryCompletionDateStruct": {
+      "date": "2023-03-24"
+     }
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "Vertex Pharmaceuticals Incorporated"
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "Cystic Fibrosis"
+     ]
+    },
+    "designModule": {
+     "phases": [
+      "PHASE3"
+     ]
+    },
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "name": "ELX/TEZ/IVA"
+      },
+      {
+       "name": "IVA"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "protocolSection": {
+    "identificationModule": {
+     "nctId": "NCT05331183",
+     "briefTitle": "Study to Evaluate Elexacaftor/Tezacaftor/Ivacaftor (ELX/TEZ/IVA) Long-term Safety and Efficacy in Subjects Without F508del"
+    },
+    "statusModule": {
+     "overallStatus": "ACTIVE_NOT_RECRUITING",
+     "primaryCompletionDateStruct": {
+      "date": "2027-04-06"
+     }
+    },
+    "sponsorCollaboratorsModule": {
+     "leadSponsor": {
+      "name": "Vertex Pharmaceuticals Incorporated"
+     }
+    },
+    "conditionsModule": {
+     "conditions": [
+      "Cystic Fibrosis"
+     ]
+    },
+    "designModule": {
+     "phases": [
+      "PHASE3"
+     ]
+    },
+    "armsInterventionsModule": {
+     "interventions": [
+      {
+       "name": "ELX/TEZ/IVA"
+      },
+      {
+       "name": "IVA"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}
