@@ -47,6 +47,7 @@ def main(argv: list[str] | None = None) -> int:
     rg.add_argument("--repeat", type=int, default=1)
     an = sub.add_parser("analyze", help="the pre-registered tests H1-H4 and run-to-run change -> reports/eval.json")
     an.add_argument("--split", choices=["dev", "test"], default="test")
+    sub.add_parser("figures", help="README figures from reports/eval.json -> reports/figures/")
     args = p.parse_args(argv)
     for stream in (sys.stdout, sys.stderr):  # labels contain characters such as "≥" that cp1252 can't print
         stream.reconfigure(encoding="utf-8", errors="replace")
@@ -133,6 +134,11 @@ def main(argv: list[str] | None = None) -> int:
         rows = evaluate.judge_rows(rows, qs, chat, faithfulness=args.faithfulness, labels=evaluate.load_labels())
         evaluate.write_rows(rows, path)
         print(json.dumps(evaluate.headline(evaluate.summarize(rows, cfg)), indent=1))
+    elif args.cmd == "figures":
+        from diligence_agent import figures
+
+        for path in figures.build(cfg):
+            print(path)
     elif args.cmd == "analyze":
         from pathlib import Path
 
