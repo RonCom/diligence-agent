@@ -83,6 +83,15 @@ def test_run_refuses_test_split(ecfg, runner, tmp_path):
         evaluate.run("baseline", "test", ecfg, runner, fake=True, model=replies("x"), reports=tmp_path)
 
 
+def test_test_repeat_is_scored_once(ecfg, runner, tmp_path, monkeypatch):
+    from diligence_agent import prereg
+
+    monkeypatch.setattr(prereg, "can_score", lambda cfg, split: (True, "eval-test-v1"))
+    evaluate.answers_path("baseline", "test", tmp_path, 1).write_text("{}\n")
+    with pytest.raises(RuntimeError, match="each repeat is run once"):
+        evaluate.run("baseline", "test", ecfg, runner, fake=True, model=replies("x"), reports=tmp_path, repeat=1)
+
+
 def test_bootstrap():
     m = mean_ci([1, 1, 0, 1], resamples=2000)
     assert m["mean"] == 0.75 and 0 <= m["lo"] <= 0.75 <= m["hi"] <= 1

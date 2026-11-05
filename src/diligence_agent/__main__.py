@@ -32,16 +32,21 @@ def main(argv: list[str] | None = None) -> int:
     ev.add_argument("--split", choices=["dev", "test"], default="dev")
     ev.add_argument("--limit", type=int)
     ev.add_argument("--ids", nargs="*", help="only these question ids")
+    ev.add_argument("--repeat", type=int, default=1, help="test repeat number (1 is primary)")
     jd = sub.add_parser("judge", help="judge saved answers (judge-checked questions; --faithfulness for all)")
     jd.add_argument("--system", choices=["agent", "baseline", "langchain"], required=True)
     jd.add_argument("--split", choices=["dev", "test"], default="dev")
     jd.add_argument("--faithfulness", action="store_true")
+    jd.add_argument("--repeat", type=int, default=1)
     ls = sub.add_parser("label-sheet", help="dev: the blind calibration sheet; test: judge-graded answers to label")
     ls.add_argument("--split", choices=["dev", "test"], default="dev")
     sub.add_parser("calibrate", help="kappa between the judge and the hand labels")
     rg = sub.add_parser("regrade", help="re-run the code checks on saved answers (after a grader fix)")
     rg.add_argument("--system", choices=["agent", "baseline", "langchain"], required=True)
     rg.add_argument("--split", choices=["dev", "test"], default="dev")
+    rg.add_argument("--repeat", type=int, default=1)
+    an = sub.add_parser("analyze", help="the pre-registered tests H1-H4 and run-to-run change -> reports/eval.json")
+    an.add_argument("--split", choices=["dev", "test"], default="test")
     args = p.parse_args(argv)
     for stream in (sys.stdout, sys.stderr):  # labels contain characters such as "≥" that cp1252 can't print
         stream.reconfigure(encoding="utf-8", errors="replace")
@@ -80,7 +85,9 @@ def main(argv: list[str] | None = None) -> int:
         from diligence_agent import evaluate, tracing
 
         tracing.setup(cfg, "diligence-agent-eval")
-        evaluate.run(args.system, args.split, cfg, runner, fake=args.fake, limit=args.limit, ids=args.ids)
+        evaluate.run(
+            args.system, args.split, cfg, runner, fake=args.fake, limit=args.limit, ids=args.ids, repeat=args.repeat
+        )
     elif args.cmd == "label-sheet":
         from pathlib import Path
 
@@ -111,7 +118,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "regrade":
         from diligence_agent import evalset, evaluate
 
-        path = evaluate.answers_path(args.system, args.split)
+        path = evaluate.answers_path(args.system, args.split, repeat=args.repeat)
         qs = {q["id"]: q for q in evalset.load(cfg["eval"]["questions"])}
         rows = evaluate.regrade(evaluate.load_rows(path), qs, labels=evaluate.load_labels())
         evaluate.write_rows(rows, path)
@@ -119,13 +126,23 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "judge":
         from diligence_agent import evalset, evaluate, grading, tracing
 
-        path = evaluate.answers_path(args.system, args.split)
+        path = evaluate.answers_path(args.system, args.split, repeat=args.repeat)
         rows = evaluate.load_rows(path)
         qs = {q["id"]: q for q in evalset.load(cfg["eval"]["questions"])}
         chat = grading.fake_judge if args.fake else grading.OllamaJudge(cfg["ollama_url"], cfg["judge_model"])
         rows = evaluate.judge_rows(rows, qs, chat, faithfulness=args.faithfulness, labels=evaluate.load_labels())
         evaluate.write_rows(rows, path)
         print(json.dumps(evaluate.headline(evaluate.summarize(rows, cfg)), indent=1))
+    elif args.cmd == "analyze":
+        from pathlib import Path
+
+        from diligence_agent import analyze
+
+        res = analyze.analyze(cfg, args.split)
+        out = Path("reports") / ("eval.json" if args.split == "test" else "eval_dev.json")
+        out.write_text(json.dumps(res, indent=1), encoding="utf8", newline="\n")
+        print(json.dumps(analyze.brief(res), indent=1))
+        print(f"-> {out}")
     elif args.cmd == "tools":
         print(json.dumps(runner.schemas(), indent=1))
     elif args.cmd == "tool":

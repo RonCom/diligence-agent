@@ -1,0 +1,475 @@
+{
+ "split": "dev",
+ "primary_repeat": 1,
+ "systems": {
+  "agent": {
+   "questions": 31,
+   "pending_judge": 0,
+   "pending_hand_labels": 0,
+   "correct_source": {
+    "code": 27,
+    "judge": 0,
+    "human": 4
+   },
+   "cite_faithful": {
+    "n": 22,
+    "mean": 1.0,
+    "lo": 1.0,
+    "hi": 1.0
+   },
+   "cite_claims": 33,
+   "cite_claims_ok": 33,
+   "correct_strict": {
+    "n": 31,
+    "mean": 0.8709677419354839,
+    "lo": 0.7419354838709677,
+    "hi": 0.967741935483871
+   },
+   "correct_raw": {
+    "n": 31,
+    "mean": 0.8709677419354839,
+    "lo": 0.7419354838709677,
+    "hi": 0.967741935483871
+   },
+   "by_category": {
+    "patent": {
+     "n": 4,
+     "mean": 0.75,
+     "lo": 0.25,
+     "hi": 1.0
+    },
+    "exclusivity": {
+     "n": 2,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "approval": {
+     "n": 3,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "indication": {
+     "n": 3,
+     "mean": 0.6666666666666666,
+     "lo": 0.0,
+     "hi": 1.0
+    },
+    "trial": {
+     "n": 2,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "readouts": {
+     "n": 2,
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    "tenk": {
+     "n": 8,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "conflict": {
+     "n": 1,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "biologic": {
+     "n": 1,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "out_of_scope": {
+     "n": 5,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    }
+   },
+   "by_style": {
+    "direct": {
+     "n": 24,
+     "mean": 0.8333333333333334,
+     "lo": 0.6666666666666666,
+     "hi": 0.9583333333333334
+    },
+    "plain": {
+     "n": 7,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    }
+   },
+   "false_declines": 3,
+   "answerable": 25,
+   "out_of_scope_declined": 5,
+   "out_of_scope": 5,
+   "cited_unseen_records": 0,
+   "answers_with_citations": 22,
+   "answers_not_declined": 22,
+   "tool_call_validity": {
+    "n": 30,
+    "mean": 0.9555555555555555,
+    "lo": 0.9,
+    "hi": 1.0
+   },
+   "model_calls_mean": 5.935483870967742,
+   "budget_stops": 1,
+   "repeated_calls": 5,
+   "latency_p50_s": 7.69,
+   "latency_p95_s": 13.21,
+   "tokens_mean": 9215.774193548386,
+   "cost_usd_total": 0.0
+  },
+  "baseline": {
+   "questions": 31,
+   "pending_judge": 0,
+   "pending_hand_labels": 0,
+   "correct_source": {
+    "code": 27,
+    "judge": 0,
+    "human": 4
+   },
+   "cite_faithful": {
+    "n": 22,
+    "mean": 0.9090909090909091,
+    "lo": 0.7727272727272727,
+    "hi": 1.0
+   },
+   "cite_claims": 32,
+   "cite_claims_ok": 29,
+   "correct_strict": {
+    "n": 31,
+    "mean": 0.6774193548387096,
+    "lo": 0.5161290322580645,
+    "hi": 0.8387096774193549
+   },
+   "correct_raw": {
+    "n": 31,
+    "mean": 0.6774193548387096,
+    "lo": 0.5161290322580645,
+    "hi": 0.8387096774193549
+   },
+   "by_category": {
+    "patent": {
+     "n": 4,
+     "mean": 0.5,
+     "lo": 0.0,
+     "hi": 1.0
+    },
+    "exclusivity": {
+     "n": 2,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "approval": {
+     "n": 3,
+     "mean": 0.6666666666666666,
+     "lo": 0.0,
+     "hi": 1.0
+    },
+    "indication": {
+     "n": 3,
+     "mean": 0.6666666666666666,
+     "lo": 0.0,
+     "hi": 1.0
+    },
+    "trial": {
+     "n": 2,
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    "readouts": {
+     "n": 2,
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    "tenk": {
+     "n": 8,
+     "mean": 0.875,
+     "lo": 0.625,
+     "hi": 1.0
+    },
+    "conflict": {
+     "n": 1,
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0
+    },
+    "biologic": {
+     "n": 1,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "out_of_scope": {
+     "n": 5,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    }
+   },
+   "by_style": {
+    "direct": {
+     "n": 24,
+     "mean": 0.625,
+     "lo": 0.4166666666666667,
+     "hi": 0.7916666666666666
+    },
+    "plain": {
+     "n": 7,
+     "mean": 0.8571428571428571,
+     "lo": 0.5714285714285714,
+     "hi": 1.0
+    }
+   },
+   "false_declines": 3,
+   "answerable": 25,
+   "out_of_scope_declined": 5,
+   "out_of_scope": 5,
+   "cited_unseen_records": 0,
+   "answers_with_citations": 20,
+   "answers_not_declined": 22,
+   "tool_call_validity": {
+    "n": 0,
+    "mean": null,
+    "lo": null,
+    "hi": null
+   },
+   "model_calls_mean": 1.0,
+   "budget_stops": 0,
+   "repeated_calls": 0,
+   "latency_p50_s": 1.98,
+   "latency_p95_s": 3.3600000000000003,
+   "tokens_mean": 2925.2580645161293,
+   "cost_usd_total": 0.0
+  },
+  "langchain": {
+   "questions": 31,
+   "pending_judge": 0,
+   "pending_hand_labels": 0,
+   "correct_source": {
+    "code": 27,
+    "judge": 0,
+    "human": 4
+   },
+   "cite_faithful": {
+    "n": 25,
+    "mean": 0.88,
+    "lo": 0.76,
+    "hi": 1.0
+   },
+   "cite_claims": 42,
+   "cite_claims_ok": 38,
+   "correct_strict": {
+    "n": 31,
+    "mean": 0.9193548387096774,
+    "lo": 0.8225806451612904,
+    "hi": 1.0
+   },
+   "correct_raw": {
+    "n": 31,
+    "mean": 0.9193548387096774,
+    "lo": 0.8225806451612904,
+    "hi": 1.0
+   },
+   "by_category": {
+    "patent": {
+     "n": 4,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "exclusivity": {
+     "n": 2,
+     "mean": 0.75,
+     "lo": 0.5,
+     "hi": 1.0
+    },
+    "approval": {
+     "n": 3,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "indication": {
+     "n": 3,
+     "mean": 0.6666666666666666,
+     "lo": 0.0,
+     "hi": 1.0
+    },
+    "trial": {
+     "n": 2,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "readouts": {
+     "n": 2,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "tenk": {
+     "n": 8,
+     "mean": 0.875,
+     "lo": 0.625,
+     "hi": 1.0
+    },
+    "conflict": {
+     "n": 1,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "biologic": {
+     "n": 1,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    },
+    "out_of_scope": {
+     "n": 5,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    }
+   },
+   "by_style": {
+    "direct": {
+     "n": 24,
+     "mean": 0.8958333333333334,
+     "lo": 0.7708333333333334,
+     "hi": 1.0
+    },
+    "plain": {
+     "n": 7,
+     "mean": 1.0,
+     "lo": 1.0,
+     "hi": 1.0
+    }
+   },
+   "false_declines": 1,
+   "answerable": 25,
+   "out_of_scope_declined": 5,
+   "out_of_scope": 5,
+   "cited_unseen_records": 1,
+   "answers_with_citations": 24,
+   "answers_not_declined": 25,
+   "tool_call_validity": {
+    "n": 26,
+    "mean": 1.0,
+    "lo": 1.0,
+    "hi": 1.0
+   },
+   "model_calls_mean": 1.8709677419354838,
+   "budget_stops": 0,
+   "repeated_calls": 0,
+   "latency_p50_s": 4.2,
+   "latency_p95_s": 9.100000000000001,
+   "tokens_mean": 4077.0,
+   "cost_usd_total": 0.0
+  }
+ },
+ "tests": [
+  {
+   "id": "H1",
+   "claim": "the agent beats the baseline",
+   "pass_if": "paired bootstrap 95% CI of (agent - baseline) is above 0",
+   "diff": {
+    "n": 31,
+    "mean": 0.1935483870967742,
+    "lo": 0.06451612903225806,
+    "hi": 0.3225806451612903,
+    "above_zero": true,
+    "excludes_zero": true
+   },
+   "mean": {
+    "agent": 0.8709677419354839,
+    "baseline": 0.6774193548387096
+   },
+   "false_declines": {
+    "agent": 3,
+    "baseline": 3
+   },
+   "passed": true,
+   "result": "pass"
+  },
+  {
+   "id": "H2",
+   "claim": "the LangChain agent beats the baseline",
+   "pass_if": "paired bootstrap 95% CI of (langchain - baseline) is above 0",
+   "diff": {
+    "n": 31,
+    "mean": 0.24193548387096775,
+    "lo": 0.06451612903225806,
+    "hi": 0.41935483870967744,
+    "above_zero": true,
+    "excludes_zero": true
+   },
+   "mean": {
+    "langchain": 0.9193548387096774,
+    "baseline": 0.6774193548387096
+   },
+   "false_declines": {
+    "langchain": 1,
+    "baseline": 3
+   },
+   "passed": true,
+   "result": "pass"
+  },
+  {
+   "id": "H3",
+   "claim": "the custom agent and the LangChain agent differ",
+   "pass_if": "the 95% CI excludes 0; otherwise report \"no difference shown\", whichever is higher",
+   "diff": {
+    "n": 31,
+    "mean": -0.04838709677419355,
+    "lo": -0.1774193548387097,
+    "hi": 0.08064516129032258,
+    "above_zero": false,
+    "excludes_zero": false
+   },
+   "mean": {
+    "agent": 0.8709677419354839,
+    "langchain": 0.9193548387096774
+   },
+   "result": "no difference shown"
+  },
+  {
+   "id": "H4",
+   "claim": "the agent declines out-of-scope questions",
+   "pass_if": "at least 9 of 10",
+   "per_system": {
+    "agent": {
+     "declined": 5,
+     "out_of_scope": 5,
+     "passed": true
+    },
+    "langchain": {
+     "declined": 5,
+     "out_of_scope": 5,
+     "passed": true
+    }
+   },
+   "passed": true,
+   "result": "pass"
+  }
+ ],
+ "rerun": {},
+ "preregistered": {
+  "version": 1,
+  "status": "approved",
+  "test_tag": "eval-test-v1"
+ }
+}

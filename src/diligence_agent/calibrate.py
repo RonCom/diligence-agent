@@ -219,9 +219,12 @@ def calibrate(labels_csv: Path, answers: dict[str, list[dict]], kappa_min: float
 
 
 def load_answers(split: str = "dev", reports: str | Path = "reports") -> dict[str, list[dict]]:
+    """Every saved answer per system; on test, every repeat's."""
     out = {}
     for s in SYSTEMS:
-        p = Path(reports) / f"answers_{s}_{split}.jsonl"
-        if p.exists():
-            out[s] = [json.loads(line) for line in open(p, encoding="utf8") if line.strip()]
+        pattern = f"answers_{s}_{split}.jsonl" if split == "dev" else f"answers_{s}_{split}_r*.jsonl"
+        rows = [json.loads(line) for p in sorted(Path(reports).glob(pattern))
+                for line in open(p, encoding="utf8") if line.strip()]  # fmt: skip
+        if rows:
+            out[s] = rows
     return out

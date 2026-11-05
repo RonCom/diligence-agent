@@ -59,8 +59,10 @@ def load_labels(reports: str | Path = "reports", eval_dir: str | Path = "eval") 
     return calibrate.hand_labels(eval_dir) if calibrate.labels_replace_judge(reports) else None
 
 
-def answers_path(system: str, split: str, reports: str | Path = "reports") -> Path:
-    return Path(reports) / f"answers_{system}_{split}.jsonl"
+def answers_path(system: str, split: str, reports: str | Path = "reports", repeat: int = 1) -> Path:
+    """Dev has one answers file per system; each test repeat has its own (r1 is primary, r2 measures rerun change)."""
+    name = f"answers_{system}_{split}.jsonl" if split == "dev" else f"answers_{system}_{split}_r{repeat}.jsonl"
+    return Path(reports) / name
 
 
 def _row(q: dict, system: str, answer: str, records: dict[str, str], s: dict, labels=None) -> dict[str, Any]:
@@ -113,10 +115,14 @@ def run(
     ids: list[str] | None = None,
     reports: str | Path = "reports",
     log=print,
+    repeat: int = 1,
 ) -> list[dict]:
     ok, why = prereg.can_score(cfg, split)
     if not ok:
         raise RuntimeError(f"refusing to score {split}: {why}")
+    out = answers_path(system, split, reports, repeat)
+    if split == "test" and out.exists():
+        raise RuntimeError(f"refusing to score test again: {out} exists (each repeat is run once)")
     qs = [q for q in evalset.load(cfg["eval"]["questions"]) if q["split"] == split]
     if ids:
         qs = [q for q in qs if q["id"] in ids]
@@ -143,18 +149,18 @@ def run(
         from diligence_agent.lc_agent import SYSTEM_PROMPT
 
         prompts["lc_agent"] = SYSTEM_PROMPT
-    lineage = tracing.lineage(cfg, prompts, fake=fake) | {"system": system, "split": split, "questions": len(qs),
+    lineage = tracing.lineage(cfg, prompts, fake=fake) | {"system": system, "split": split, "repeat": repeat,
+                                                          "questions": len(qs),
                                                           "eval_set_sha": tracing.sha(Path(cfg["eval"]["questions"])
                                                                                       .read_bytes())}  # fmt: skip
     ctx["tags"] = lineage
     rows = []
-    out = answers_path(system, split, reports)
     out.parent.mkdir(parents=True, exist_ok=True)
-    with mlflow.start_run(run_name=f"{system}-{split}"):
+    with mlflow.start_run(run_name=f"{system}-{split}" + (f"-r{repeat}" if split == "test" else "")):
         mlflow.log_params({k: str(v)[:500] for k, v in lineage.items()})
         for i, q in enumerate(qs, 1):
             t0 = time.perf_counter()
-            row = answer_one(system, q, ctx)
+            row = answer_one(system, q, ctx) | {"repeat": repeat}
             rows.append(row)
             log(f"[{i}/{len(qs)}] {q['id']} {row['check_type']:12} strict={row['correct_strict']} "
                 f"{time.perf_counter() - t0:5.1f}s  {row['answer'][:90]!r}")  # fmt: skip
