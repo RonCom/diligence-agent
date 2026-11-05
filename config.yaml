@@ -54,7 +54,8 @@ eval:
 # scored once, from a frozen git tag; everything is tuned on dev. Edits after approval need a new version and a
 # note in the README saying what changed and why.
 preregistered:
-  status: approved                 # draft -> approved (by Chris) -> frozen (tagged); scoring test needs frozen
+  status: frozen                   # draft -> approved (by Chris) -> frozen (tagged); scoring test needs frozen
+  frozen: 2026-11-05               # by Chris, at tag eval-test-v1
   version: 1
   drafted: 2026-11-04
   approved: 2026-11-04             # by Chris, as drafted (version 1)
